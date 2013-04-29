@@ -1,0 +1,16 @@
+regexp syntax
+
+
+^\.sconsign\.dblite$
+
+# Linux/vim specifics
+\.swp$
+^unit/
+^pgnparser-tests$
+
+# Windows/VC++ specifics
+^VS/Debug/
+\.sdf$
+\.suo$
+\.user$
+\.opensdf$
