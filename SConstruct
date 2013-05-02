@@ -3,10 +3,11 @@ env = Environment()
 # Unit test target
 unit = env.Clone()
 unit.VariantDir('unit/tests', 'tests', duplicate=0)
+unit.VariantDir('unit/src', 'src', duplicate=0)
 unit.Append(CFLAGS = ['-g', '-Wall', '-D_DEBUG'])
 unit.Append(LIBPATH = ['./libs/UnitTest++'], LIBS='UnitTest++')
 
-unit_target = unit.Program('pgnparser-tests', Glob('unit/tests/*.cpp'))
+unit_target = unit.Program('pgnparser-tests', Glob('unit/tests/*.cpp') + Glob('unit/src/*.cpp'))
 
 # We create a test alias to run unit tests
 test_target = Alias('test', [unit_target], unit_target[0].abspath)

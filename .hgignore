@@ -7,6 +7,7 @@ regexp syntax
 \.swp$
 ^unit/
 ^pgnparser-tests$
+^tags$
 
 # Windows/VC++ specifics
 ^VS/Debug/
