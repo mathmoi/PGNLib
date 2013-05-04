@@ -80,6 +80,10 @@ namespace PgnParser
     void check_unexpected_eof();
     PgnToken read_word_token();
     PgnToken read_string_token();
+    PgnToken read_comment_token();
+    PgnToken read_result_token();
+    PgnToken read_number_token();
+    PgnToken read_symbol_token();
   };
 }
 

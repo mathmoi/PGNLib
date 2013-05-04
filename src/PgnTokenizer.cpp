@@ -82,6 +82,7 @@ namespace PgnParser
     PgnToken token(WORD, current_value_);
     reset_current_value();
     skip_white_spaces();
+    assert(token.get_type() == WORD);
     return token;
   }
 
@@ -122,6 +123,89 @@ namespace PgnParser
     return token;
   }
 
+  PgnToken PgnTokenizer::read_comment_token()
+  {
+    assert(!eof());
+    assert(current_char_ == '{' || current_char_ == ';');
+
+    // We check if we read a remaining of line or a comment within braces.
+    if (current_char_ == '{')
+    {
+      read_next_char(); // '{'
+      while(!eof() && current_char_ != '}')
+      {
+        store_current_char_read_next();
+      }
+
+      check_unexpected_eof();
+      read_next_char(); // '}'
+    }
+    else
+    {
+      read_next_char(); // ';'
+      while (!eof() && current_char_ != '\n' && current_char_ != '\r')
+      {
+        store_current_char_read_next();
+      }
+    }
+
+    PgnToken token(COMMENT, current_value_);
+    reset_current_value();
+    skip_white_spaces();
+    return token;
+  }
+
+  PgnToken PgnTokenizer::read_result_token()
+  {
+    assert(std::isdigit(current_char_) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/');
+
+    store_current_char_read_next();
+    while (std::isdigit(current_char_) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/')
+    {
+      store_current_char_read_next();
+    }
+
+    PgnToken token(RESULT, current_value_);
+    reset_current_value();
+    skip_white_spaces();
+    return token;
+  }
+
+  PgnToken PgnTokenizer::read_number_token()
+  {
+    assert(std::isdigit(current_char_));
+
+    store_current_char_read_next();
+    while (std::isdigit(current_char_))
+    {
+      store_current_char_read_next();
+    }
+
+    PgnToken token(NUMBER, current_value_);
+    reset_current_value();
+    skip_white_spaces();
+    return token;
+  }
+
+  PgnToken PgnTokenizer::read_symbol_token()
+  {
+    store_current_char_read_next();
+
+    // If the first character is a dot en the next character is a dot we 
+    // continue to read characters. This will allow us to threat multiples  
+    // consecutives dots as a single symbol. This is necessary to 
+    // differentiate dots from elipsis.
+    while (current_value_[0] == '.' && current_char_ == '.')
+    {
+      store_current_char_read_next();
+    }
+
+    PgnToken token(SYMBOL, current_value_);
+    reset_current_value();
+    skip_white_spaces();
+    return token;
+  }
+
   PgnToken PgnTokenizer::get_next_token()
   {
     if (this->eof())
@@ -138,5 +222,34 @@ namespace PgnParser
     {
       return read_string_token();
     }
+
+    if (current_char_ == '{'
+        || current_char_ == ';')
+    {
+      return read_comment_token();
+    }
+
+    if (current_char_ == '*')
+    {
+      return read_result_token();
+    }
+
+    // At this point if the current_char_ is a digit there is two possibilities
+    //  1) The token is a result, in wich case the next character is a '-' or a
+    //      '/'.
+    //  2) In other cases the token is a number
+    if (std::isdigit(current_char_))
+    {
+      if (ptr_is_->peek() == '-' || ptr_is_->peek() == '/')
+      {
+        return read_result_token();
+      }
+      else
+      {
+        return read_number_token();
+      }
+    }
+
+    return read_symbol_token();
   }
 }
