@@ -146,7 +146,7 @@ namespace PgnParser
       CHECK_EQUAL(token4.get_value(), "?");
     }
 
-    TEST(tmp)
+    /*TEST(tmp)
     {
       std::ifstream in("pgn/hard.pgn");
       
@@ -159,6 +159,6 @@ namespace PgnParser
       }
 
       in.close();
-    }
+    }*/
   }
 }

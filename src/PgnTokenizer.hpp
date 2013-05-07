@@ -1,5 +1,5 @@
-#ifndef INCLUDE_PGN_PARSER_HPP_
-#define INCLUDE_PGN_PARSER_HPP_
+#ifndef INCLUDE_PGN_TOKENIZER_HPP_
+#define INCLUDE_PGN_TOKENIZER_HPP_
 
 #include <istream>
 #include <string>
@@ -87,4 +87,4 @@ namespace PgnParser
   };
 }
 
-#endif // INCLUDE_PGN_PARSER_HPP_
+#endif // INCLUDE_PGN_TOKENIZER_HPP_

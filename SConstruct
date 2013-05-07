@@ -1,10 +1,12 @@
 env = Environment()
 
+env.Append(CXXFLAGS = ['-std=c++11', '-Wall']);
+
 # Unit test target
 unit = env.Clone()
 unit.VariantDir('unit/tests', 'tests', duplicate=0)
 unit.VariantDir('unit/src', 'src', duplicate=0)
-unit.Append(CFLAGS = ['-g', '-Wall', '-D_DEBUG'])
+unit.Append(CXXFLAGS = ['-g', '-D_DEBUG'])
 unit.Append(LIBPATH = ['./libs/UnitTest++'], LIBS='UnitTest++')
 
 unit_target = unit.Program('pgnparser-tests', Glob('unit/tests/*.cpp') + Glob('unit/src/*.cpp'))
