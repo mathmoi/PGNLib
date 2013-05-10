@@ -18,12 +18,12 @@ namespace PgnParser
       CHECK_EQUAL(11u, game.get_tags().size());
       CHECK_EQUAL("2010.02.21", game.get_tags()["Date"]);
 
-      std::shared_ptr<PgnMove> move = std::static_pointer_cast<PgnMove>(game.get_move_text().get_items()[0]);
+      /*std::shared_ptr<PgnMove> move = std::static_pointer_cast<PgnMove>(game.get_move_text().get_items()[0]);
       CHECK_EQUAL("e4", move->get_move());
 
       unsigned int size = game.get_move_text().get_items().size();
       move = std::static_pointer_cast<PgnMove>(game.get_move_text().get_items()[size - 1]);
-      CHECK_EQUAL("Nb5", move->get_move());
+      CHECK_EQUAL("Nb5", move->get_move());*/
 
       /*for (std::shared_ptr<PgnMoveTextItem> item: game.get_move_text().get_items())
       {

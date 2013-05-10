@@ -7,14 +7,13 @@
 
 namespace PgnParser
 {
-  class PgnGame
+  class PgnGame : public PgnVariation
   {
   public: 
     typedef std::map<std::string, std::string> TagsContainer;
   
   private:
     TagsContainer tags_;
-    PgnVariation move_text_;
 
   public:
     inline PgnGame() {};
@@ -27,13 +26,6 @@ namespace PgnParser
      * interface.
      */
     inline TagsContainer& get_tags() { return tags_; };
-
-    /*
-     * This function returns a reference to the internal move_text_ object.
-     *
-     * Again, we violate the encapsulation concept to simplify the interface.
-     */
-    inline PgnVariation& get_move_text() { return move_text_; };
   };
 }
 

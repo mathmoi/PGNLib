@@ -99,13 +99,16 @@ namespace PgnParser
     return move;
   }
 
-  std::shared_ptr<PgnVariation> PgnParser::parse_variation(unsigned int first_move_number, bool first_move_white)
+  // This function which parse a variation takes a pointer to a PgnVariation
+  // object instead of creating the variation itself. This allow the client
+  // code to pass a pointer to a PgnVariation or a downcasted pointer to a
+  // PgnGame.
+  void PgnParser::parse_variation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation)
   {
-    bool is_sub_variation = false;
-    std::shared_ptr<PgnVariation> variation(new PgnVariation());
+    //bool is_sub_variation = false;
          
     // This will contains the number of move parsed in this variation.
-    unsigned int number_move_parsed = 0;
+    //unsigned int number_move_parsed = 0;
 
     // If the current token is an opening parenthesis, we are parsing a sub 
     // variation. We take note and skip the parenthesis.
@@ -113,7 +116,7 @@ namespace PgnParser
         && current_token_->get_value() == "(")
     {
       read_next_token(); // skip '('
-      is_sub_variation = true;   
+      //is_sub_variation = true;   
     }
 
     // While we are not at the end of the source, we are not at a result token 
@@ -134,7 +137,7 @@ namespace PgnParser
       {
         // If the current token is a word we parse it as a move.
         std::shared_ptr<PgnMoveTextItem> item = parse_move();
-        variation->get_items().push_back(item);
+        variation->push_back(item);
       }
       else
       {
@@ -143,8 +146,6 @@ namespace PgnParser
       }
 
     }
-
-    return variation;
   }
 
   PgnGame PgnParser::parse_single_game()
@@ -157,7 +158,7 @@ namespace PgnParser
     game.get_tags() = parse_tags();
 
     // We parse the moves
-    game.get_move_text() = *parse_variation(1, true);
+    parse_variation(1, true, &game);
 
     return game;
   }
