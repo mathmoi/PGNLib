@@ -18,17 +18,17 @@ namespace PgnParser
       PgnTokenizer tokenizer(&is);
       CHECK(!tokenizer.eof());
 
-      PgnToken token1 = tokenizer.get_next_token();
-      CHECK_EQUAL(token1.get_type(), WORD);
-      CHECK_EQUAL(token1.get_value(), "Bonjour");
+      PgnToken token1 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token1.type(), WORD);
+      CHECK_EQUAL(token1.value(), "Bonjour");
 
-      PgnToken token2 = tokenizer.get_next_token();
-      CHECK_EQUAL(token2.get_type(), WORD);
-      CHECK_EQUAL(token2.get_value(), "le");
+      PgnToken token2 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token2.type(), WORD);
+      CHECK_EQUAL(token2.value(), "le");
 
-      PgnToken token3 = tokenizer.get_next_token();
-      CHECK_EQUAL(token3.get_type(), WORD);
-      CHECK_EQUAL(token3.get_value(), "monde");
+      PgnToken token3 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token3.type(), WORD);
+      CHECK_EQUAL(token3.value(), "monde");
 
       CHECK(!is.good());
       CHECK(tokenizer.eof());
@@ -41,13 +41,13 @@ namespace PgnParser
       PgnTokenizer tokenizer(&is);
       CHECK(!tokenizer.eof());
 
-      PgnToken token1 = tokenizer.get_next_token();
-      CHECK_EQUAL(token1.get_type(), STRING);
-      CHECK_EQUAL(token1.get_value(), "Bonjour le monde");
+      PgnToken token1 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token1.type(), STRING);
+      CHECK_EQUAL(token1.value(), "Bonjour le monde");
 
-      PgnToken token2 = tokenizer.get_next_token();
-      CHECK_EQUAL(token2.get_type(), STRING);
-      CHECK_EQUAL(token2.get_value(), "Comment \\allez \"vous\"?");
+      PgnToken token2 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token2.type(), STRING);
+      CHECK_EQUAL(token2.value(), "Comment \\allez \"vous\"?");
 
       CHECK(!is.good());
       CHECK(tokenizer.eof());
@@ -60,21 +60,21 @@ namespace PgnParser
       PgnTokenizer tokenizer(&is);
       CHECK(!tokenizer.eof());
 
-      PgnToken token1 = tokenizer.get_next_token();
-      CHECK_EQUAL(token1.get_type(), COMMENT);
-      CHECK_EQUAL(token1.get_value(), "Comment number one");
+      PgnToken token1 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token1.type(), COMMENT);
+      CHECK_EQUAL(token1.value(), "Comment number one");
 
-      PgnToken token2 = tokenizer.get_next_token();
-      CHECK_EQUAL(token2.get_type(), WORD);
-      CHECK_EQUAL(token2.get_value(), "alloa");
+      PgnToken token2 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token2.type(), WORD);
+      CHECK_EQUAL(token2.value(), "alloa");
 
-      PgnToken token3 = tokenizer.get_next_token();
-      CHECK_EQUAL(token3.get_type(), COMMENT);
-      CHECK_EQUAL(token3.get_value(), " Comment number two");
+      PgnToken token3 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token3.type(), COMMENT);
+      CHECK_EQUAL(token3.value(), " Comment number two");
       
-      PgnToken token4 = tokenizer.get_next_token();
-      CHECK_EQUAL(token4.get_type(), COMMENT);
-      CHECK_EQUAL(token4.get_value(), "Comment number three");
+      PgnToken token4 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token4.type(), COMMENT);
+      CHECK_EQUAL(token4.value(), "Comment number three");
     }
 
     TEST(ReadResultTest)
@@ -84,21 +84,21 @@ namespace PgnParser
       PgnTokenizer tokenizer(&is);
       CHECK(!tokenizer.eof());
 
-      PgnToken token1 = tokenizer.get_next_token();
-      CHECK_EQUAL(token1.get_type(), RESULT);
-      CHECK_EQUAL(token1.get_value(), "*");
+      PgnToken token1 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token1.type(), RESULT);
+      CHECK_EQUAL(token1.value(), "*");
 
-      PgnToken token2 = tokenizer.get_next_token();
-      CHECK_EQUAL(token2.get_type(), RESULT);
-      CHECK_EQUAL(token2.get_value(), "1-0");
+      PgnToken token2 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token2.type(), RESULT);
+      CHECK_EQUAL(token2.value(), "1-0");
 
-      PgnToken token3 = tokenizer.get_next_token();
-      CHECK_EQUAL(token3.get_type(), RESULT);
-      CHECK_EQUAL(token3.get_value(), "0-1");
+      PgnToken token3 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token3.type(), RESULT);
+      CHECK_EQUAL(token3.value(), "0-1");
 
-      PgnToken token4 = tokenizer.get_next_token();
-      CHECK_EQUAL(token4.get_type(), RESULT);
-      CHECK_EQUAL(token4.get_value(), "1/2-1/2");
+      PgnToken token4 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token4.type(), RESULT);
+      CHECK_EQUAL(token4.value(), "1/2-1/2");
     }
 
     TEST(ReadNumberTest)
@@ -108,17 +108,17 @@ namespace PgnParser
       PgnTokenizer tokenizer(&is);
       CHECK(!tokenizer.eof());
 
-      PgnToken token1 = tokenizer.get_next_token();
-      CHECK_EQUAL(token1.get_type(), NUMBER);
-      CHECK_EQUAL(token1.get_value(), "1");
+      PgnToken token1 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token1.type(), NUMBER);
+      CHECK_EQUAL(token1.value(), "1");
 
-      PgnToken token2 = tokenizer.get_next_token();
-      CHECK_EQUAL(token2.get_type(), NUMBER);
-      CHECK_EQUAL(token2.get_value(), "236");
+      PgnToken token2 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token2.type(), NUMBER);
+      CHECK_EQUAL(token2.value(), "236");
 
-      PgnToken token3 = tokenizer.get_next_token();
-      CHECK_EQUAL(token3.get_type(), NUMBER);
-      CHECK_EQUAL(token3.get_value(), "3");
+      PgnToken token3 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token3.type(), NUMBER);
+      CHECK_EQUAL(token3.value(), "3");
 
     }
 
@@ -129,21 +129,21 @@ namespace PgnParser
       PgnTokenizer tokenizer(&is);
       CHECK(!tokenizer.eof());
 
-      PgnToken token1 = tokenizer.get_next_token();
-      CHECK_EQUAL(token1.get_type(), SYMBOL);
-      CHECK_EQUAL(token1.get_value(), ".");
+      PgnToken token1 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token1.type(), SYMBOL);
+      CHECK_EQUAL(token1.value(), ".");
 
-      PgnToken token2 = tokenizer.get_next_token();
-      CHECK_EQUAL(token2.get_type(), SYMBOL);
-      CHECK_EQUAL(token2.get_value(), "...");
+      PgnToken token2 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token2.type(), SYMBOL);
+      CHECK_EQUAL(token2.value(), "...");
 
-      PgnToken token3 = tokenizer.get_next_token();
-      CHECK_EQUAL(token3.get_type(), SYMBOL);
-      CHECK_EQUAL(token3.get_value(), "!");
+      PgnToken token3 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token3.type(), SYMBOL);
+      CHECK_EQUAL(token3.value(), "!");
 
-      PgnToken token4 = tokenizer.get_next_token();
-      CHECK_EQUAL(token4.get_type(), SYMBOL);
-      CHECK_EQUAL(token4.get_value(), "?");
+      PgnToken token4 = tokenizer.GetNextToken();
+      CHECK_EQUAL(token4.type(), SYMBOL);
+      CHECK_EQUAL(token4.value(), "?");
     }
 
     /*TEST(tmp)
@@ -154,8 +154,8 @@ namespace PgnParser
 
       while (!tokenizer.eof())
       {
-        PgnToken t = tokenizer.get_next_token();
-        std::cout <<t.get_value() <<std::endl;
+        PgnToken t = tokenizer.GetNextToken();
+        std::cout <<t.value() <<std::endl;
       }
 
       in.close();

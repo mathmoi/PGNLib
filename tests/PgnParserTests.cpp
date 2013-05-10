@@ -13,7 +13,7 @@ namespace PgnParser
     {
       std::ifstream in("pgn/simple.pgn");
       PgnParser parser(&in);
-      PgnGame game = parser.parse_single_game();
+      PgnGame game = parser.ParseSingleGame();
 
       CHECK_EQUAL(11u, game.tags().size());
       CHECK_EQUAL("2010.02.21", game.tags()["Date"]);

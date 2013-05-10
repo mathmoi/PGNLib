@@ -32,10 +32,8 @@ namespace PgnParser
     ItemsVector items_;
 
   public:
-    inline PgnMoveTextItemType get_type() const { return ITEM_VARIATION; };
-
     inline void set_first_move_number(unsigned int first_move_number) { first_move_number_ = first_move_number; };
-    inline unsigned int get_first_move_number() const { return first_move_number_; };
+    inline unsigned int first_move_number() const { return first_move_number_; };
 
     inline ItemPointer operator[](unsigned int n) { return items_[n]; };
     inline ConstItemPointer operator[](unsigned int n) const { return std::const_pointer_cast<const PgnMoveTextItem>(items_[n]); };

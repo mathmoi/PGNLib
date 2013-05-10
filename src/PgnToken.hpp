@@ -42,8 +42,8 @@ namespace PgnParser
       value_ = value;
     }
 
-    inline PgnTokenType get_type() const { return type_; };
-    inline const std::string& get_value() const { return value_; };
+    inline PgnTokenType type() const { return type_; };
+    inline const std::string& value() const { return value_; };
   };
 }
 

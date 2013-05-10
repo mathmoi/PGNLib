@@ -14,21 +14,21 @@ namespace PgnParser
 
     // We need skip the white spaces so if the user call eof() we can return 
     // true or false.
-    skip_white_spaces();
+    SkipWhiteSpaces();
   };
 
-  void PgnTokenizer::read_next_char()
+  void PgnTokenizer::ReadNextChar()
   {
     current_char_ = ptr_is_->good() ? ptr_is_->get() : '\0';
   }
 
-  void PgnTokenizer::store_current_char_read_next()
+  void PgnTokenizer::StoreCurrentCharReadNext()
   {
     current_value_ += current_char_;
-    read_next_char();
+    ReadNextChar();
   }
 
-  void PgnTokenizer::skip_white_spaces()
+  void PgnTokenizer::SkipWhiteSpaces()
   {
     // There is 3 situation in wich we need to escape a character :
     //   1) If the character is a whitespace (comprised between '\0' and ' ')
@@ -47,17 +47,17 @@ namespace PgnParser
                && current_char_ != '\n'
                && current_char_ != '\r')
         {
-          read_next_char();
+          ReadNextChar();
         } 
       }
       else
       {
-        read_next_char();
+        ReadNextChar();
       }
     }
   }
 
-  void PgnTokenizer::check_unexpected_eof()
+  void PgnTokenizer::CheckUnexpectedEof()
   {
     if (eof())
     {
@@ -65,13 +65,13 @@ namespace PgnParser
     }
   }
 
-  PgnToken PgnTokenizer::read_word_token()
+  PgnToken PgnTokenizer::ReadWordToken()
   {
     assert(!eof());
     assert(std::isalpha(current_char_)); // The current character is a letter
 
     do {
-      store_current_char_read_next();
+      StoreCurrentCharReadNext();
     } while (std::isalpha(current_char_)
              || std::isdigit(current_char_)
              || current_char_ == '+'
@@ -80,20 +80,20 @@ namespace PgnParser
              || current_char_ == '=');
 
     PgnToken token(WORD, current_value_);
-    reset_current_value();
-    skip_white_spaces();
-    assert(token.get_type() == WORD);
+    ResetCurrentValue();
+    SkipWhiteSpaces();
+    assert(token.type() == WORD);
     return token;
   }
 
-  PgnToken PgnTokenizer::read_string_token()
+  PgnToken PgnTokenizer::ReadStringToken()
   {
     assert(!eof());
     assert(current_char_ == '"'); // The current character is a string delimiter ('"').
 
     bool escape_next = false; // This will be set to true if we need to escape a character.
 
-    read_next_char(); // We skip the quote
+    ReadNextChar(); // We skip the quote
     while (!eof()
            && (current_char_ != '"' || escape_next))
     {
@@ -104,26 +104,26 @@ namespace PgnParser
       if (!escape_next && current_char_ == '\\')
       {
         escape_next = true;
-        read_next_char();
+        ReadNextChar();
       }
       else
       {
-        store_current_char_read_next();
+        StoreCurrentCharReadNext();
         escape_next = false;
       }
     }
 
-    check_unexpected_eof();
+    CheckUnexpectedEof();
 
-    read_next_char(); // We skip the closing quote
+    ReadNextChar(); // We skip the closing quote
 
     PgnToken token(STRING, current_value_);
-    reset_current_value();
-    skip_white_spaces();
+    ResetCurrentValue();
+    SkipWhiteSpaces();
     return token;
   }
 
-  PgnToken PgnTokenizer::read_comment_token()
+  PgnToken PgnTokenizer::ReadCommentToken()
   {
     assert(!eof());
     assert(current_char_ == '{' || current_char_ == ';');
@@ -131,65 +131,65 @@ namespace PgnParser
     // We check if we read a remaining of line or a comment within braces.
     if (current_char_ == '{')
     {
-      read_next_char(); // '{'
+      ReadNextChar(); // '{'
       while(!eof() && current_char_ != '}')
       {
-        store_current_char_read_next();
+        StoreCurrentCharReadNext();
       }
 
-      check_unexpected_eof();
-      read_next_char(); // '}'
+      CheckUnexpectedEof();
+      ReadNextChar(); // '}'
     }
     else
     {
-      read_next_char(); // ';'
+      ReadNextChar(); // ';'
       while (!eof() && current_char_ != '\n' && current_char_ != '\r')
       {
-        store_current_char_read_next();
+        StoreCurrentCharReadNext();
       }
     }
 
     PgnToken token(COMMENT, current_value_);
-    reset_current_value();
-    skip_white_spaces();
+    ResetCurrentValue();
+    SkipWhiteSpaces();
     return token;
   }
 
-  PgnToken PgnTokenizer::read_result_token()
+  PgnToken PgnTokenizer::ReadResultToken()
   {
     assert(std::isdigit(current_char_) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/');
 
-    store_current_char_read_next();
+    StoreCurrentCharReadNext();
     while (std::isdigit(current_char_) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/')
     {
-      store_current_char_read_next();
+      StoreCurrentCharReadNext();
     }
 
     PgnToken token(RESULT, current_value_);
-    reset_current_value();
-    skip_white_spaces();
+    ResetCurrentValue();
+    SkipWhiteSpaces();
     return token;
   }
 
-  PgnToken PgnTokenizer::read_number_token()
+  PgnToken PgnTokenizer::ReadNumberToken()
   {
     assert(std::isdigit(current_char_));
 
-    store_current_char_read_next();
+    StoreCurrentCharReadNext();
     while (std::isdigit(current_char_))
     {
-      store_current_char_read_next();
+      StoreCurrentCharReadNext();
     }
 
     PgnToken token(NUMBER, current_value_);
-    reset_current_value();
-    skip_white_spaces();
+    ResetCurrentValue();
+    SkipWhiteSpaces();
     return token;
   }
 
-  PgnToken PgnTokenizer::read_symbol_token()
+  PgnToken PgnTokenizer::ReadSymbolToken()
   {
-    store_current_char_read_next();
+    StoreCurrentCharReadNext();
 
     // If the first character is a dot en the next character is a dot we 
     // continue to read characters. This will allow us to threat multiples  
@@ -197,16 +197,16 @@ namespace PgnParser
     // differentiate dots from elipsis.
     while (current_value_[0] == '.' && current_char_ == '.')
     {
-      store_current_char_read_next();
+      StoreCurrentCharReadNext();
     }
 
     PgnToken token(SYMBOL, current_value_);
-    reset_current_value();
-    skip_white_spaces();
+    ResetCurrentValue();
+    SkipWhiteSpaces();
     return token;
   }
 
-  PgnToken PgnTokenizer::get_next_token()
+  PgnToken PgnTokenizer::GetNextToken()
   {
     if (this->eof())
     {
@@ -215,23 +215,23 @@ namespace PgnParser
 
     if (std::isalpha(current_char_))
     {
-      return read_word_token();
+      return ReadWordToken();
     }
 
     if (current_char_ == '"')
     {
-      return read_string_token();
+      return ReadStringToken();
     }
 
     if (current_char_ == '{'
         || current_char_ == ';')
     {
-      return read_comment_token();
+      return ReadCommentToken();
     }
 
     if (current_char_ == '*')
     {
-      return read_result_token();
+      return ReadResultToken();
     }
 
     // At this point if the current_char_ is a digit there is two possibilities
@@ -242,14 +242,14 @@ namespace PgnParser
     {
       if (ptr_is_->peek() == '-' || ptr_is_->peek() == '/')
       {
-        return read_result_token();
+        return ReadResultToken();
       }
       else
       {
-        return read_number_token();
+        return ReadNumberToken();
       }
     }
 
-    return read_symbol_token();
+    return ReadSymbolToken();
   }
 }

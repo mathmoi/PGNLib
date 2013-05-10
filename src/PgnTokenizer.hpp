@@ -63,7 +63,7 @@ namespace PgnParser
      * Generates and return the next token. If there is no more tokens to 
      * return an EndOfStreamException is thrown.
      */
-    PgnToken get_next_token();
+    PgnToken GetNextToken();
 
     /*
      * This function indicate if there is still tokens to read on the stream. 
@@ -73,17 +73,17 @@ namespace PgnParser
     inline bool eof() { return current_char_ == '\0'; };
 
   private:
-    void skip_white_spaces();
-    void read_next_char();
-    void store_current_char_read_next();
-    inline void reset_current_value() { current_value_.clear(); };
-    void check_unexpected_eof();
-    PgnToken read_word_token();
-    PgnToken read_string_token();
-    PgnToken read_comment_token();
-    PgnToken read_result_token();
-    PgnToken read_number_token();
-    PgnToken read_symbol_token();
+    void SkipWhiteSpaces();
+    void ReadNextChar();
+    void StoreCurrentCharReadNext();
+    inline void ResetCurrentValue() { current_value_.clear(); };
+    void CheckUnexpectedEof();
+    PgnToken ReadWordToken();
+    PgnToken ReadStringToken();
+    PgnToken ReadCommentToken();
+    PgnToken ReadResultToken();
+    PgnToken ReadNumberToken();
+    PgnToken ReadSymbolToken();
   };
 }
 

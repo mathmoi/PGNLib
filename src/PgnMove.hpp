@@ -13,10 +13,8 @@ namespace PgnParser
       : move_(move)
     {};
 
-    inline const std::string& get_move() const { return move_; };
+    inline const std::string& move() const { return move_; };
     inline void set_move(std::string move) { move_ = move; };
-
-    inline PgnMoveTextItemType get_type() const { return ITEM_MOVE; };
   };
 }
 

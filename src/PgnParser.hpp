@@ -31,28 +31,28 @@ namespace PgnParser
      */
     inline PgnParser(std::istream* is)
       : tokenizer_(is),
-        current_token_(new PgnToken(tokenizer_.get_next_token()))
+        current_token_(new PgnToken(tokenizer_.GetNextToken()))
     {};
 
     /*
      * This function parse and return a single game.
      */
-    PgnGame parse_single_game();
+    PgnGame ParseSingleGame();
   
   private:
     /*
      * Following are private helper functions
      */
-    void read_next_token();
+    void ReadNextToken();
     bool eof() const;
-    void check_unexpected_eof() const;
-    void skip_expected_token(PgnTokenType type, const std::string& value);
-    void check_expected_token_type(PgnTokenType type);
-    void check_expected_token_value(const std::string& value);
+    void CheckUnexpectedEof() const;
+    void SkipExpectedToken(PgnTokenType type, const std::string& value);
+    void CheckExpectedTokenType(PgnTokenType type);
+    void CheckExpectedTokenValue(const std::string& value);
 
-    void parse_tags(PgnTags& tags);
-    void parse_variation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
-    std::shared_ptr<PgnMove> parse_move();
+    void ParseTags(PgnTags& tags);
+    void ParseVariation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
+    std::shared_ptr<PgnMove> ParseMove();
   };
 }
 

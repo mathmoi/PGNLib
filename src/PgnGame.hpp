@@ -8,9 +8,6 @@ namespace PgnParser
 {
   class PgnGame : public PgnVariation
   {
-  public: 
-    typedef std::map<std::string, std::string> TagsContainer;
-  
   private:
     PgnTags tags_;
 
