@@ -60,9 +60,8 @@ namespace PgnParser
     }
   }
 
-  PgnGame::TagsContainer PgnParser::parse_tags()
+  void PgnParser::parse_tags(PgnTags& tags)
   {
-    PgnGame::TagsContainer tags;
     while (current_token_
            && current_token_->get_type() == SYMBOL
            && current_token_->get_value() == "[")
@@ -84,8 +83,6 @@ namespace PgnParser
 
       tags[name] = value;
     }
-
-    return tags;
   }
 
   std::shared_ptr<PgnMove> PgnParser::parse_move()
@@ -155,7 +152,7 @@ namespace PgnParser
     check_unexpected_eof();
 
     // We parse the tags
-    game.get_tags() = parse_tags();
+    parse_tags(game.tags());
 
     // We parse the moves
     parse_variation(1, true, &game);

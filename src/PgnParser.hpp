@@ -50,7 +50,7 @@ namespace PgnParser
     void check_expected_token_type(PgnTokenType type);
     void check_expected_token_value(const std::string& value);
 
-    PgnGame::TagsContainer parse_tags();
+    void parse_tags(PgnTags& tags);
     void parse_variation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
     std::shared_ptr<PgnMove> parse_move();
   };
