@@ -8,6 +8,7 @@
 #include "PgnGame.hpp"
 #include "PgnVariation.hpp"
 #include "PgnMove.hpp"
+#include "PgnNag.hpp"
 
 namespace PgnParser
 {
@@ -53,6 +54,8 @@ namespace PgnParser
     void ParseTags(PgnTags& tags);
     void ParseVariation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
     std::shared_ptr<PgnMove> ParseMove();
+    std::shared_ptr<PgnNag> ParseNag();
+    std::shared_ptr<PgnNag> ParseSuffixAnnotation();
   };
 }
 

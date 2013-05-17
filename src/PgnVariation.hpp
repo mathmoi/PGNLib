@@ -28,12 +28,16 @@ namespace PgnParser
     typedef ItemsVector::const_iterator const_iterator;
 
   private:
-    unsigned int first_move_number_;
+    unsigned int first_move_number_ = 0;
+    bool first_move_white_ = true;
     ItemsVector items_;
 
   public:
     inline void set_first_move_number(unsigned int first_move_number) { first_move_number_ = first_move_number; };
     inline unsigned int first_move_number() const { return first_move_number_; };
+
+    inline void set_first_move_white(bool first_move_white) { first_move_white_ = first_move_white; };
+    inline bool first_move_white() const { return first_move_white_; };
 
     inline ItemPointer operator[](unsigned int n) { return items_[n]; };
     inline ConstItemPointer operator[](unsigned int n) const { return std::const_pointer_cast<const PgnMoveTextItem>(items_[n]); };
