@@ -64,5 +64,42 @@ namespace PgnParser
         }
       }*/
     }
+
+    TEST(ParseSubVariation)
+    {
+      std::string input = "1. e4 (1. Nc3 e5) e5 2. f4";
+      std::istringstream stream(input);
+      PgnParser parser(&stream);
+      
+      PgnGame game = parser.ParseSingleGame();
+
+      CHECK_EQUAL(4u, game.end() - game.begin());
+
+      std::shared_ptr<PgnVariation> variation = std::dynamic_pointer_cast<PgnVariation>(*(game.begin() + 1));
+      CHECK(variation);
+
+      std::shared_ptr<PgnMove> move = std::dynamic_pointer_cast<PgnMove>(*variation->begin());
+      CHECK(move);
+      CHECK(move->move() == "Nc3");
+    }
+
+    TEST(ParseComment)
+    {
+      std::string input = "1. e4 {wow} e5 2. f4 ; super\nf5";
+      std::istringstream stream(input);
+      PgnParser parser(&stream);
+      
+      PgnGame game = parser.ParseSingleGame();
+
+      CHECK_EQUAL(6u, game.end() - game.begin());
+
+      std::shared_ptr<PgnComment> comment = std::dynamic_pointer_cast<PgnComment>(*(game.begin() + 1));
+      CHECK(comment);
+      CHECK_EQUAL("wow", comment->comment());
+
+      comment = std::dynamic_pointer_cast<PgnComment>(*(game.begin() + 4));
+      CHECK(comment);
+      CHECK_EQUAL(" super", comment->comment());
+    }
   }
 }

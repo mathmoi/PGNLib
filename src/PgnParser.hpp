@@ -9,6 +9,7 @@
 #include "PgnVariation.hpp"
 #include "PgnMove.hpp"
 #include "PgnNag.hpp"
+#include "PgnComment.hpp"
 
 namespace PgnParser
 {
@@ -56,6 +57,7 @@ namespace PgnParser
     std::shared_ptr<PgnMove> ParseMove();
     std::shared_ptr<PgnNag> ParseNag();
     std::shared_ptr<PgnNag> ParseSuffixAnnotation();
+    std::shared_ptr<PgnComment> ParseComment();
   };
 }
 

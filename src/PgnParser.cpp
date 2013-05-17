@@ -123,15 +123,8 @@ namespace PgnParser
 
   std::shared_ptr<PgnNag> PgnParser::ParseSuffixAnnotation()
   {
-    static const std::map<std::string, NAG> ANNOTATION_MAP = 
-    {
-      {"!", NAG::GOOD_MOVE},
-      {"?", NAG::POOR_MOVE},
-      {"!!", NAG::VERY_GOOD_MOVE},
-      {"??", NAG::VERY_POOR_MOVE},
-      {"!?", NAG::SPECULATIVE_MOVE},
-      {"?!", NAG::QUESTIONABLE_MOVE}
-    };
+    assert(current_token_->type() == SYMBOL);
+    assert(current_token_->value() == "!" || current_token_->value() == "?");
 
     std::shared_ptr<PgnNag> nag;
 
@@ -178,13 +171,22 @@ namespace PgnParser
     return nag;
   }
 
+  std::shared_ptr<PgnComment> PgnParser::ParseComment()
+  {
+    assert(current_token_->type() == COMMENT);
+
+    std::shared_ptr<PgnComment> comment(new PgnComment(current_token_->value()));
+    ReadNextToken();
+    return comment;
+  }
+
   // This function which parse a variation takes a pointer to a PgnVariation
   // object instead of creating the variation itself. This allow the client
   // code to pass a pointer to a PgnVariation or a downcasted pointer to a
   // PgnGame.
   void PgnParser::ParseVariation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation)
   {
-    //bool is_sub_variation = false;
+    bool is_sub_variation = false;
          
     // This will contains the number of move parsed in this variation.
     unsigned int number_move_parsed = 0;
@@ -195,7 +197,7 @@ namespace PgnParser
         && current_token_->value() == "(")
     {
       ReadNextToken(); // skip '('
-      //is_sub_variation = true;   
+      is_sub_variation = true;   
     }
 
     // While we are not at the end of the source, we are not at a result token 
@@ -203,7 +205,7 @@ namespace PgnParser
     // variation.
     while (!eof()
            && current_token_->type() != RESULT
-           && current_token_->value() != "(")
+           && current_token_->value() != ")")
     {
       // If the current token is a number and we haven't parsed any move yet, 
       // we use this number as our first move number.
@@ -252,12 +254,35 @@ namespace PgnParser
         std::shared_ptr<PgnMoveTextItem> item = ParseSuffixAnnotation();
         variation->push_back(item);
       }
+      else if (current_token_->type() == SYMBOL && current_token_->value() == "(")
+      {
+        // If the current token is an opening parenthesis we parse a 
+        // sub variation.
+        std::shared_ptr<PgnVariation> sub_variation(new PgnVariation);
+        unsigned int first_move_index = first_move_number * 2 - (first_move_white ? 1 : 0);
+        unsigned int next_move_index = first_move_index + number_move_parsed - 1;
+        unsigned int next_move_number = (next_move_index + 1) / 2;
+        bool next_move_white = next_move_index % 2;
+        ParseVariation(next_move_number, next_move_white, sub_variation.get());
+
+        variation->push_back(sub_variation);
+      }
+      else if (current_token_->type() == COMMENT)
+      {
+        std::shared_ptr<PgnMoveTextItem> item = ParseComment();
+        variation->push_back(item);
+      }
       else
       {
         // TODO : Do something instead of burnign th tokens.
         ReadNextToken();
       }
+    }
 
+    // If it was a sub variation we expect to read a closing parenthesis
+    if (is_sub_variation)
+    {
+      SkipExpectedToken(SYMBOL, ")");
     }
   }
 
