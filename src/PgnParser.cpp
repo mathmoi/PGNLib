@@ -272,10 +272,16 @@ namespace PgnParser
         std::shared_ptr<PgnMoveTextItem> item = ParseComment();
         variation->push_back(item);
       }
+      else if (current_token_->type() == SYMBOL)
+      {
+        // If there is another (unrecognised) symbol we skip it and hope for 
+        // the best. In some case this will allow the parser to accept files 
+        // that would be otherwise invalid.
+        ReadNextToken();
+      }
       else
       {
-        // TODO : Do something instead of burnign th tokens.
-        ReadNextToken();
+        throw UnexpectedTokenException();
       }
     }
 
@@ -284,6 +290,34 @@ namespace PgnParser
     {
       SkipExpectedToken(SYMBOL, ")");
     }
+  }
+
+  PgnResult PgnParser::ParseResult()
+  {
+    static const std::map<std::string, PgnResult> RESULT_MAP = 
+    {
+      {"1-0", PgnResult::WHITE_WIN},
+      {"1-O", PgnResult::WHITE_WIN},
+      {"0-1", PgnResult::BLACK_WIN},
+      {"O-1", PgnResult::BLACK_WIN},
+      {"1/2-1/2", PgnResult::DRAW},
+      {"*", PgnResult::UNKNOWN}
+    };
+
+    CheckExpectedTokenType(RESULT);
+
+    PgnResult result = PgnResult::UNKNOWN;
+    try
+    {
+      result = RESULT_MAP.at(current_token_->value());
+    }
+    catch (std::out_of_range ex)
+    {
+      throw UnexpectedTokenException();
+    }
+
+    ReadNextToken();
+    return result;
   }
 
   PgnGame PgnParser::ParseSingleGame()
@@ -297,6 +331,8 @@ namespace PgnParser
 
     // We parse the moves
     ParseVariation(1, true, &game);
+
+    game.set_result(ParseResult());
 
     return game;
   }

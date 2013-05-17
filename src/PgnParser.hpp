@@ -40,13 +40,18 @@ namespace PgnParser
      * This function parse and return a single game.
      */
     PgnGame ParseSingleGame();
+
+    /*
+     * Indicate if the eof the stream is reached. If not, we should be able to 
+     * read the next game with ParseSingleGame.
+     */
+    bool eof() const;
   
   private:
     /*
      * Following are private helper functions
      */
     void ReadNextToken();
-    bool eof() const;
     void CheckUnexpectedEof() const;
     void SkipExpectedToken(PgnTokenType type, const std::string& value);
     void CheckExpectedTokenType(PgnTokenType type);
@@ -58,6 +63,7 @@ namespace PgnParser
     std::shared_ptr<PgnNag> ParseNag();
     std::shared_ptr<PgnNag> ParseSuffixAnnotation();
     std::shared_ptr<PgnComment> ParseComment();
+    PgnResult ParseResult();
   };
 }
 
