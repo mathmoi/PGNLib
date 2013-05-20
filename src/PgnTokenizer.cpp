@@ -10,7 +10,7 @@ namespace PgnParser
   PgnTokenizer::PgnTokenizer(std::istream* ptr_is)
       : ptr_is_(ptr_is)
   {
-    current_char_ = ptr_is_->get();
+    ReadNextChar();
 
     // We need skip the white spaces so if the user call eof() we can return 
     // true or false.

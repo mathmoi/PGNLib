@@ -1,13 +1,15 @@
 regexp syntax
 
-
 ^\.sconsign\.dblite$
 
 # Linux/vim specifics
 \.swp$
 ^unit/
+^prof-bin/
 ^pgnparser-tests$
+^pgnparser-prof$
 ^tags$
+^gmon.out$
 
 # Windows/VC++ specifics
 ^VS/Debug/
