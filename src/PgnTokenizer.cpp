@@ -5,7 +5,7 @@
 #include "PgnTokenizer.hpp"
 #include "PgnToken.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   PgnTokenizer::PgnTokenizer(std::istream* ptr_is)
       : ptr_is_(ptr_is)

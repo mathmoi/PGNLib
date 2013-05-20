@@ -2,7 +2,7 @@
 
 #include "PgnParser.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   void PgnParser::ReadNextToken()
   {

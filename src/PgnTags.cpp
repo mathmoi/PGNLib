@@ -1,6 +1,6 @@
 #include "PgnTags.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   const std::map<std::string, unsigned int> PgnTags::STR = {{"Event", 1}, {"Site", 2}, {"Date", 3}, {"Round", 4}, {"White", 5}, {"Black", 6}, {"Result", 7}};
 

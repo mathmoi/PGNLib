@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-namespace PgnParser
+namespace Pgn
 {
   class PgnTags
   {

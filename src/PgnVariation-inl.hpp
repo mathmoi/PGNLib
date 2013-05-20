@@ -1,7 +1,7 @@
 #ifndef INGLUDE_PGN_VARIATION_INL_HPP_
 #define INGLUDE_PGN_VARIATION_INL_HPP_
 
-namespace PgnParser
+namespace Pgn
 {
   // Foward declaration of PgnGame to prevent having to include the file here.
   class PgnGame;

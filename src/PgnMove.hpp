@@ -1,7 +1,7 @@
 #ifndef INCLUDE_PGN_MOVE_HPP_
 #define INCLUDE_PGN_MOVE_HPP_
 
-namespace PgnParser
+namespace Pgn
 {
   class PgnMove : public PgnMoveTextItem
   {

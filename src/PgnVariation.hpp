@@ -7,7 +7,7 @@
 
 #include "PgnMoveTextItem.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   class InvalidItemException : public std::runtime_error
   {

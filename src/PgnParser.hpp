@@ -11,7 +11,7 @@
 #include "PgnNag.hpp"
 #include "PgnComment.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   class UnexpectedTokenException : public std::runtime_error
   {

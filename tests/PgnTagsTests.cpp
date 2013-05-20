@@ -5,7 +5,7 @@
 
 #include "../src/PgnTags.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   SUITE(PgnTagsTests)
   {

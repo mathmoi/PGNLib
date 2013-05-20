@@ -7,7 +7,7 @@
 
 #include "../src/PgnTokenizer.hpp"
 
-namespace PgnParser
+namespace Pgn
 {
   SUITE(PgnTokenizerTests)
   {
