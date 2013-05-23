@@ -4,10 +4,10 @@
 #include <array>
 
 #include "Piece.hpp"
+#include "BitboardConstants.hpp"
 
 namespace Pgn
 {
-  typedef uint64_t Bitboard;
   typedef size_t Position;
 
   const size_t MAX_INDEX_PIECE = 15;
@@ -18,16 +18,6 @@ namespace Pgn
     KING_SIDE = 0,
     QUEEN_SIDE = 1
   };
-
-  /*inline Piece PieceType(size_t index)
-  {
-    return static_cast<Piece>(index & ~1);
-  }
-
-  inline Color PieceColor(size_t index)
-  {
-    return static_cast<Color>(index & 1);
-  }*/
 
   class Chessboard
   {
