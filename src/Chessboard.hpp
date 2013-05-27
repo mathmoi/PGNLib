@@ -2,6 +2,8 @@
 #define INCLUDE_CHESS_BOARD_HPP_
 
 #include <array>
+#include <string>
+#include <stdexcept>
 
 #include "Piece.hpp"
 #include "BitboardConstants.hpp"
@@ -17,6 +19,13 @@ namespace Pgn
   {
     KING_SIDE = 0,
     QUEEN_SIDE = 1
+  };
+
+  class BadFenException : public std::runtime_error
+  {
+  public:
+    BadFenException()
+      : std::runtime_error("Could not parse the FEN string.") {};
   };
 
   class Chessboard
@@ -49,11 +58,18 @@ namespace Pgn
   public:
 
     // Initialize the chessboard with the standard starting position
-    inline Chessboard();
+    Chessboard();
 
-  private:
+    // Initialize the chessboard with a fen encoded position
+    Chessboard(const std::string& fen);
+
+  private:   
     inline void AddPiece(Position pos, Piece piece);
     inline void RemovePiece(Position pos);
+
+    // This function emptys the Chessboard, initializing all members. It is 
+    // used by constructors.
+    void Empty();
   };
 }
 
