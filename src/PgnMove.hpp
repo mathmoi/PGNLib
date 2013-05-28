@@ -2,6 +2,7 @@
 #define INCLUDE_PGN_MOVE_HPP_
 
 #include "Piece.hpp"
+#include "PgnMoveTextItem.hpp"
 
 namespace Pgn
 {
@@ -18,12 +19,21 @@ namespace Pgn
     Piece captured_piece_;
     Piece promotion_piece_;
   public:
+    // TODO : REMOVE THIS CONSTRUCTOR
     PgnMove(std::string move)
       : move_(move),
         from_(0),
         to_(0)
     {};
 
+    PgnMove(Position from, Position to, Piece piece, Piece captured_piece, Piece promotion_piece)
+      : from_(from),
+        to_(to),
+        piece_(piece),
+        captured_piece_(captured_piece),
+        promotion_piece_(promotion_piece)
+    {};
+    
     inline const std::string& move() const { return move_; };
     inline void set_move(std::string move) { move_ = move; };
 

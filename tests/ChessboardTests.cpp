@@ -18,6 +18,7 @@ namespace Pgn
     {
       Chessboard cb1("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
       Chessboard cb2("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2");
+      Chessboard cb3("r3k3/1pp1q3/Q7/2n3pP/4R3/2N5/1PPP4/rB2K2R w Kq - 0 1 ");
     }
   }
 }

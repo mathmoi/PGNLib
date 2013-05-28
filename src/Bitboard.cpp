@@ -53,4 +53,18 @@ namespace Pgn
 
     return attacks;
   }
+
+  Bitboard XRayRookAttacks(Bitboard occupancy, Bitboard blockers, Position rook_position)
+  {
+    Bitboard attacks = RookAttacks(occupancy, rook_position);
+    blockers &= attacks;
+    return attacks ^ RookAttacks(occupancy ^ blockers, rook_position);
+  }
+
+  Bitboard XRayBishopAttacks(Bitboard occupancy, Bitboard blockers, Position bishop_position)
+  {
+    Bitboard attacks = BishopAttacks(occupancy, bishop_position);
+    blockers &= attacks;
+    return attacks ^ BishopAttacks(occupancy ^ blockers, bishop_position);
+  }
 }

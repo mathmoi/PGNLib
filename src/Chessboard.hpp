@@ -63,6 +63,12 @@ namespace Pgn
     // Initialize the chessboard with a fen encoded position
     Chessboard(const std::string& fen);
 
+    inline Bitboard occupancy() const { return occupancy_; };
+    inline Bitboard bb_piece(Piece p) const { return bb_pieces_[p]; };
+    inline Bitboard bb_colors(Color c) const { return bb_colors_[static_cast<size_t>(c)]; };
+    inline Color next_to_move() const { return next_to_move_; };
+    inline Piece operator[] (Position p) const { return board_[p]; };
+
   private:   
     inline void AddPiece(Position pos, Piece piece);
     inline void RemovePiece(Position pos);

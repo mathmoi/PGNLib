@@ -1,6 +1,8 @@
 #ifndef INCLUDE_PIECE_HPP_
 #define INCLUDE_PIECE_HPP_
 
+#include <unordered_map>
+
 namespace Pgn
 {
   enum class Color : size_t
@@ -19,6 +21,16 @@ namespace Pgn
     QUEEN = 14,
     KING = 6
   };
+
+  const std::unordered_map<char, PieceType> CHAR_TO_PIECE_TYPE_MAP =
+    {
+      {'R', PieceType::ROOK},
+      {'N', PieceType::KNIGHT},
+      {'B', PieceType::BISHOP},
+      {'Q', PieceType::QUEEN},
+      {'K', PieceType::KING},
+      {'P', PieceType::PAWN},
+    };
 
   class Piece
   {

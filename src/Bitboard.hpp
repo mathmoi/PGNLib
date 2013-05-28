@@ -9,6 +9,8 @@ namespace Pgn
   typedef size_t Position;
   typedef uint64_t Bitboard;
 
+  const Bitboard Bitboard_MAX = UINT64_MAX;
+
   // returns the column index of the position p.
   size_t File(Position p);
 
