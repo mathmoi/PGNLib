@@ -68,6 +68,7 @@ namespace Pgn
     inline Bitboard bb_colors(Color c) const { return bb_colors_[static_cast<size_t>(c)]; };
     inline Color next_to_move() const { return next_to_move_; };
     inline Piece operator[] (Position p) const { return board_[p]; };
+    inline size_t en_passant_column () const { return en_passant_column_; };
 
   private:   
     inline void AddPiece(Position pos, Piece piece);
@@ -77,6 +78,10 @@ namespace Pgn
     // used by constructors.
     void Empty();
   };
+
+  // This function returns a bitboard of the pieces of a particular color that 
+  // are pinned to their king.
+  Bitboard GetPinnedPieces(const Chessboard& board, Color color);
 }
 
 #include "Chessboard-inl.hpp"

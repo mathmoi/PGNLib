@@ -12,6 +12,7 @@ namespace Pgn
     board_[pos] = piece; 
     bb_pieces_[piece] |= bb_position;
     bb_colors_[static_cast<size_t>(piece.color())] |= bb_position;
+    occupancy_ |= bb_position;
   }
 
   void Chessboard::RemovePiece(Position pos)
@@ -24,5 +25,6 @@ namespace Pgn
     bb_pieces_[board_[pos]] ^= bb_position;
     bb_colors_[static_cast<size_t>(board_[pos].color())] ^= bb_position;
     board_[pos] = Piece(PieceType::NONE, Color::WHITE);
+    occupancy_ ^= bb_position;
   }
 }

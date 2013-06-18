@@ -4,6 +4,7 @@
 
 #include "Chessboard.hpp"
 #include "Utils.hpp"
+#include "Bitboard.hpp"
 
 namespace Pgn
 {
@@ -189,5 +190,32 @@ namespace Pgn
         throw BadFenException();
       }
     }
+  }
+
+  Bitboard GetPinnedPieces(const Chessboard& board, Color color)
+  {
+    Position king_position = BitSearch(board.bb_piece(Piece(PieceType::KING, color)));
+    Color opposite_color = GetOtherSide(color);
+    Bitboard op_rook_queen = board.bb_piece(Piece(PieceType::ROOK, opposite_color)) | board.bb_piece(Piece(PieceType::QUEEN, opposite_color));
+    Bitboard op_bishop_queen = board.bb_piece(Piece(PieceType::BISHOP, opposite_color)) | board.bb_piece(Piece(PieceType::QUEEN, opposite_color));
+
+    Bitboard pinned = 0;
+    Bitboard pinner = XRayRookAttacks(board.occupancy(), board.bb_colors(color), king_position) & op_rook_queen;
+    while (pinner)
+    {
+      Position sq = BitSearch(pinner);
+      pinned |= GetObstructed(sq, king_position) & board.bb_colors(color);
+      pinner = ResetLSB(pinner);
+    }
+
+    pinner = XRayBishopAttacks(board.occupancy(), board.bb_colors(color), king_position) & op_bishop_queen;
+    while (pinner)
+    {
+      Position sq = BitSearch(pinner);
+      pinned |= GetObstructed(sq, king_position) & board.bb_colors(color);
+      pinner = ResetLSB(pinner);
+    }
+
+    return pinned;
   }
 }

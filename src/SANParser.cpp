@@ -2,9 +2,80 @@
 
 namespace Pgn
 {
-  Position GetOrigineMove(const Chessboard& board, Piece p, Position to, Bitboard from)
+  Position GetOrigineMove(const Chessboard& board, Piece p, Position to, bool is_capture, Bitboard from)
   {
-    return 0;
+    // First we get a bitboard of the candidates origins. The way to get it 
+    // depends on the piece type.
+    Bitboard candidates;
+    switch (p.type())
+    {
+    case PieceType::ROOK:
+      candidates = RookAttacks(board.occupancy(), to) & board.bb_piece(p);
+      break;
+
+    case PieceType::BISHOP:
+      candidates = BishopAttacks(board.occupancy(), to) & board.bb_piece(p);
+      break;
+
+    case PieceType::QUEEN:
+      candidates = (RookAttacks(board.occupancy(), to) | BishopAttacks(board.occupancy(), to)) & board.bb_piece(p);
+      break;
+
+    case PieceType::KNIGHT:
+      candidates = bb_knight_attacks[to] & board.bb_piece(p);
+      break;
+
+    case PieceType::KING:
+      candidates = bb_king_attacks[to] & board.bb_piece(p);
+      break;
+
+    case PieceType::PAWN:
+      if (is_capture)
+      {
+        // If the pawn move is a capture it's origin candidates will be on the 
+        // left and right columns, one row behind the to square. The direction 
+        // of the move depends on the color of the pawn.
+        Bitboard b = bb_positions[to];
+        b &= ~bb_ranks[0]; // We remove the position if it's in the a file.
+        candidates = (p.color() == Color::BLACK ? b << 7 : b >> 9);  // Get the left candidate.
+
+        b = bb_positions[to];
+        b &= ~bb_ranks[7]; // We remove the position if in the h file
+        candidates |= (p.color() == Color::BLACK ? b << 9 : b >> 7);  // Get the left candidate.
+
+        candidates &= board.bb_piece(p);
+      }
+      else
+      {
+        // The pawn move is not a capture. We need to get candidates for the normal moves and 
+        // the two square initials moves.
+        Bitboard b = bb_positions[to];
+        b = (p.color() == Color::BLACK ? b << 8 : b >> 8);
+        candidates = b & board.bb_piece(p);
+
+        b &= ~board.occupancy();
+        b = (p.color() == Color::BLACK ? b << 8 : b >> 8);
+        candidates |= b & board.bb_piece(p);
+      }
+      break;
+
+    case PieceType::NONE:
+      break;
+    }
+
+    // We only keep candidates that overlaps with the from bitboard;
+    candidates &= from;
+
+    // If there is not candidate or if there is more than one we throw 
+    // an exceptions
+    if (candidates == 0
+        || (candidates & (candidates - 1)) != 0)
+    {
+      throw InvalidMoveException();
+    }
+
+    Position origin = BitSearch(candidates);
+    return origin;
   }
 
   PgnMove ParseSanMove(const Chessboard& board, const std::string& san)
@@ -15,6 +86,7 @@ namespace Pgn
     Piece captured_piece;
     Piece promotion_piece;
     Bitboard bb_from_candidates = Bitboard_MAX;
+    bool is_capture = false;
 
     if (san == "O-O-O")
     {
@@ -66,24 +138,9 @@ namespace Pgn
         throw InvalidMoveException();
       }
 
-      // If there is a 'x' character at the end it means the move is a capture
-      if (*end == 'x')
-      {
-        captured_piece = board[to];
-        --end;
-
-        // if the captured piece is NONE or of the side to move next we throw 
-        // an exception
-        if (captured_piece.type() == PieceType::NONE
-            || captured_piece.color() == board.next_to_move())
-        {
-          throw InvalidMoveException();
-        }
-      }
-
       // If the first character is a piece it's moved piece, otherwise the moved piece 
       // is a pawn.
-      if (*begin >= 'A' && *begin <= 'Z')
+      if (begin <= end && *begin >= 'A' && *begin <= 'Z')
       {
         try
         {
@@ -100,9 +157,35 @@ namespace Pgn
         piece = Piece(PieceType::PAWN, board.next_to_move());
       }
 
+      // If there is a 'x' character at the end it means the move is a capture
+      if (begin <= end && *end == 'x')
+      {
+        // If this is a prise en passant
+        if (piece.type() == PieceType::PAWN
+            && file_index == board.en_passant_column()
+            && rank_index == 5 - static_cast<size_t>(board.next_to_move()) * 3)
+        {
+          captured_piece = Piece(PieceType::PAWN, GetOtherSide(board.next_to_move()));
+        }
+        else
+        {
+          captured_piece = board[to];
+        }
+        is_capture = true;
+        --end;
+
+        // if the captured piece is NONE or of the side to move next we throw 
+        // an exception
+        if (captured_piece.type() == PieceType::NONE
+            || captured_piece.color() == board.next_to_move())
+        {
+          throw InvalidMoveException();
+        }
+      }
+
       // if the first character is a file, it's the origin file. In that 
       // case we must restrict bb_from_candidates to that file.
-      if (*begin >= 'a' && *begin <= 'h')
+      if (begin <= end && *begin >= 'a' && *begin <= 'h')
       {
         uint_fast8_t file_index = *begin - 'a';
         bb_from_candidates = bb_files[file_index];
@@ -111,7 +194,7 @@ namespace Pgn
 
       // If the first character rank, it's the origin rank, In that cast we 
       // must restrict bb_from_candidates to that rank.
-      if (*begin >= '1' && *begin <= '8')
+      if (begin <= end && *begin >= '1' && *begin <= '8')
       {
         uint_fast8_t rank_index = *begin - '1';
         bb_from_candidates &= bb_ranks[rank_index * 8];
@@ -125,7 +208,7 @@ namespace Pgn
       }
 
       // We now get the origin
-      from = GetOrigineMove(board, piece, to, bb_from_candidates);
+      from = GetOrigineMove(board, piece, to, is_capture, bb_from_candidates);
     }
 
     return PgnMove(from, to, piece, captured_piece, promotion_piece);

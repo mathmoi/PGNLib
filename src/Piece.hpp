@@ -11,6 +11,11 @@ namespace Pgn
     BLACK = 1
   };
 
+  inline Color GetOtherSide(Color c)
+  {
+    return static_cast<Color>(static_cast<size_t>(c) ^ 1u);
+  }
+
   enum class PieceType : size_t
   {
     NONE = 0,

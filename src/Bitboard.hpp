@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <cstdlib>
 
+#include "BitboardConstants.hpp"
+
 namespace Pgn
 {
   typedef size_t Position;
@@ -34,6 +36,23 @@ namespace Pgn
   // on rook_position through blockers on the squares identified by the
   // blockers Bitboard.
   Bitboard XRayBishopAttacks(Bitboard occupancy, Bitboard blockers, Position bishop_position);
+
+  // Returns the position of the least significant set bit in the bitboard passed in parameters.
+  inline unsigned int BitSearch(Bitboard bb);
+
+  // Returns the bitboard passed in parameter with it's LSB bit reset
+  // to zero.
+  inline Bitboard ResetLSB(Bitboard b);
+
+  // Given two standard square coordinates (0..63) returns the 0x88 
+  // differences (0..239).
+  inline unsigned int x88diff(int f, int t) {return t - f + (t|7) - (f|7) + 120;};
+
+  inline Bitboard RotateLeft (Bitboard x, int s) {return (x << s) | (x >> (64-s));}
+
+  inline Bitboard GetObstructed(Position f, Position t) {return RotateLeft(obstructed_by_0x88_diff[x88diff(f, t)], f);};
 }
+
+#include "Bitboard-inl.hpp"
 
 #endif // INCLUDE_BITBOARD_HPP_
