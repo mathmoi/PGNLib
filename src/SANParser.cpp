@@ -66,6 +66,26 @@ namespace Pgn
     // We only keep candidates that overlaps with the from bitboard;
     candidates &= from;
 
+    // If candidates are pinned we keep them only if the ray defined by the 
+    // piece and the destination is the same as the ray defined by the piece 
+    // and it's king. This way the piece still "protect" the king.
+    Bitboard pinned = GetPinnedPieces(board, p.color());
+    pinned &= candidates;
+    if (pinned)
+    {
+      Position king_position = BitSearch(board.bb_piece(Piece(PieceType::KING, p.color())));
+
+      do
+      {
+        Position from = BitSearch(pinned);
+        pinned = ResetLSB(pinned);
+        if (GetDirection(from, to) != GetDirection(from, king_position))
+        {
+          candidates ^= bb_positions[from];
+        }
+      } while (pinned);
+    }
+
     // If there is not candidate or if there is more than one we throw 
     // an exceptions
     if (candidates == 0

@@ -35,5 +35,28 @@ namespace Pgn
       PgnMove m6 = ParseSanMove(cb, "hxg6");
       CHECK_EQUAL(m6.from(), static_cast<Position>(39)); // h5: 39
     }
+
+    TEST(SANParserAmbiguousMoves)
+    {
+      Chessboard cb("1k6/4q1q1/PP6/KP2q1P1/PP3B2/2P5/2q5/6q1 b - - 0 1");
+
+      PgnMove m = ParseSanMove(cb, "Q1xg5");
+      CHECK_EQUAL(m.from(), static_cast<Position>(6)); // g1: 6
+
+      m = ParseSanMove(cb, "Qg7xg5");
+      CHECK_EQUAL(m.from(), static_cast<Position>(54)); // g7: 54
+
+      m = ParseSanMove(cb, "Qexg5");
+      CHECK_EQUAL(m.from(), static_cast<Position>(52)); // e7: 52
+
+      m = ParseSanMove(cb, "Qcxc3");
+      CHECK_EQUAL(m.from(), static_cast<Position>(10)); // c2: 10
+
+      m = ParseSanMove(cb, "Q5c7");
+      CHECK_EQUAL(m.from(), static_cast<Position>(36)); // e5: 36
+
+      m = ParseSanMove(cb, "Q7c7");
+      CHECK_EQUAL(m.from(), static_cast<Position>(52)); // e7: 36
+    }
   }
 }
