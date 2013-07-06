@@ -5,7 +5,7 @@
 
 namespace Pgn
 {
-  enum class Color : size_t
+  enum class Color : std::uint_fast8_t
   {
     WHITE = 0,
     BLACK = 1

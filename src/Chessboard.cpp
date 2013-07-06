@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <cstdlib>
 
 #include "Chessboard.hpp"
 #include "Utils.hpp"
@@ -217,5 +218,94 @@ namespace Pgn
     }
 
     return pinned;
+  }
+
+  void Chessboard::MakeMove(Position from, Position to, Piece promotion_piece)
+  {
+    Piece piece = board_[from];
+
+    uint_fast8_t first_rank = static_cast<uint_fast8_t>(piece.color()) * 7;
+
+    uint_fast8_t rank_from = from / 8;
+    uint_fast8_t file_from = from % 8;
+    uint_fast8_t rank_to = to / 8;
+    uint_fast8_t file_to = to % 8;
+
+    // If it's a prise en passant. We detect the prise en passant by the 
+    // fact that 1) the move is diagonal, 2) There is no piece on the target 
+    // square and 3) the target square is on the en_passant_column.
+    if (piece.type() == PieceType::PAWN
+        && abs(from % 8 - to % 8) == 1
+        && board_[to].type() == PieceType::NONE
+        && to % 8 == en_passant_column_)
+    {
+      Position pos_piece_taken = to - 8 + 16 * static_cast<std::uint_fast8_t>(piece.color());
+      RemovePiece(pos_piece_taken);
+    }
+
+    // If it's a capture we remove the captured piece.
+    if (board_[to].type() != PieceType::NONE)
+    {
+      RemovePiece(to);
+    }
+
+    // If it's a two square king move we must move the rook accordingly to 
+    // castle rules.
+    if (piece.type() == PieceType::KING
+        && abs(from - to) == 2)
+    {
+      // If it's a queen side castle
+      if (file_to == 2)
+      {
+        AddPiece(rank_to * 8 + 3, board_[rank_to * 8]);
+        RemovePiece(rank_to * 8);
+      }
+      else if (file_to == 6)
+      {
+        AddPiece(rank_to * 8 + 5, board_[rank_to * 8 + 7]);
+        RemovePiece(rank_to * 8 + 7);
+      }
+      else
+      {
+        // TODO : We should throw an exception.
+      }
+    }
+
+    // We move the piece
+    RemovePiece(from);
+    AddPiece(to, piece);
+
+    // If it's a promotion we need to change the pawn into the promoted piece.
+    if (promotion_piece.type() != PieceType::NONE)
+    {
+      RemovePiece(to);
+      AddPiece(to, promotion_piece);
+    }
+
+    // If it's a two square pawn move we must set the en_passant_column_.
+    if (piece.type() == PieceType::PAWN
+        && abs(from - to) == 16)
+    {
+      en_passant_column_ = file_from;
+    }
+    else
+    {
+      en_passant_column_ = NO_EN_PASSANT;
+    }
+
+    // If it's a move on the first rank we need to further check if it affects 
+    // castling rights.
+    if (rank_from == first_rank)
+    {
+      if (file_from == 0 || file_from == 4)
+      {
+        castling_flags_ &= ~(static_cast<uint_fast8_t>(Castle::QUEEN_SIDE) << static_cast<uint_fast8_t>(piece.color()));
+      }
+
+      if (file_from == 7 || file_from == 4)
+      {
+        castling_flags_ &= ~(static_cast<uint_fast8_t>(Castle::KING_SIDE) << static_cast<uint_fast8_t>(piece.color()));
+      }
+    }
   }
 }
