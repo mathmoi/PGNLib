@@ -1,5 +1,7 @@
 #include "SANParser.hpp"
 
+#include <iostream>
+
 namespace Pgn
 {
   Position GetOrigineMove(const Chessboard& board, Piece p, Position to, bool is_capture, Bitboard from)
@@ -36,11 +38,11 @@ namespace Pgn
         // left and right columns, one row behind the to square. The direction 
         // of the move depends on the color of the pawn.
         Bitboard b = bb_positions[to];
-        b &= ~bb_ranks[0]; // We remove the position if it's in the a file.
+        b &= ~bb_files[0]; // We remove the position if it's in the a file.
         candidates = (p.color() == Color::BLACK ? b << 7 : b >> 9);  // Get the left candidate.
 
         b = bb_positions[to];
-        b &= ~bb_ranks[7]; // We remove the position if in the h file
+        b &= ~bb_files[7]; // We remove the position if in the h file
         candidates |= (p.color() == Color::BLACK ? b << 9 : b >> 7);  // Get the left candidate.
 
         candidates &= board.bb_piece(p);
@@ -100,21 +102,27 @@ namespace Pgn
 
   PgnMove ParseSanMove(const Chessboard& board, const std::string& san)
   {
+    /*if (san == "dxc1=Q")
+    {
+      std::cout <<"Hello" <<std::endl;
+    }*/
+
+
     Position from;
     Position to;
     Piece piece;
     Piece captured_piece;
-    PieceType promotion_piece_type;
+    PieceType promotion_piece_type = PieceType::NONE;
     Bitboard bb_from_candidates = Bitboard_MAX;
     bool is_capture = false;
 
-    if (san == "O-O-O")
+    if (san.substr(0, 5) == "O-O-O")
     {
       from = board.next_to_move() == Color::WHITE ? 4 : 60;
       to = board.next_to_move() == Color::WHITE ? 2 : 58;
       piece = Piece(PieceType::KING, board.next_to_move());
     }
-    else if (san == "O-O")
+    else if (san.substr(0, 3) == "O-O")
     {
       from = board.next_to_move() == Color::WHITE ? 4 : 60;
       to = board.next_to_move() == Color::WHITE ? 6 : 62;
