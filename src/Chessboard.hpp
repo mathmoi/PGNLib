@@ -28,6 +28,16 @@ namespace Pgn
       : std::runtime_error("Could not parse the FEN string.") {};
   };
 
+  class InvalidMakeMoveException : public std::runtime_error
+  {
+  public:
+    InvalidMakeMoveException()
+      : std::runtime_error("Invalid move") {};
+
+    InvalidMakeMoveException(const std::string& what_arg)
+      : std::runtime_error(what_arg) {};
+  };
+
   class Chessboard
   {
   private:
@@ -71,7 +81,7 @@ namespace Pgn
     inline size_t en_passant_column () const { return en_passant_column_; };
     inline bool castling_flag(Color color, Castle castle) const { return castling_flags_ & (static_cast<uint_fast8_t>(castle) << static_cast<uint_fast8_t>(color)); };  
 
-    void MakeMove(Position from, Position to, Piece promotion_piece);
+    void MakeMove(Position from, Position to, PieceType promotion_piece_type);
 
   private:   
     inline void AddPiece(Position pos, Piece piece);

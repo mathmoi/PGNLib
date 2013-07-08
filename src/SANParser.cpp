@@ -104,7 +104,7 @@ namespace Pgn
     Position to;
     Piece piece;
     Piece captured_piece;
-    Piece promotion_piece;
+    PieceType promotion_piece_type;
     Bitboard bb_from_candidates = Bitboard_MAX;
     bool is_capture = false;
 
@@ -136,7 +136,7 @@ namespace Pgn
       {
         try
         {
-          promotion_piece = Piece(CHAR_TO_PIECE_TYPE_MAP.at(*end), board.next_to_move());
+          promotion_piece_type = CHAR_TO_PIECE_TYPE_MAP.at(*end);
           end -= 2;
         }
         catch (std::out_of_range)
@@ -231,6 +231,6 @@ namespace Pgn
       from = GetOrigineMove(board, piece, to, is_capture, bb_from_candidates);
     }
 
-    return PgnMove(from, to, piece, captured_piece, promotion_piece);
+    return PgnMove(from, to, promotion_piece_type);
   }
 }

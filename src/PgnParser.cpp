@@ -1,6 +1,7 @@
 #include <cassert>
 
 #include "PgnParser.hpp"
+#include "SANParser.hpp"
 
 namespace Pgn
 {
@@ -85,14 +86,13 @@ namespace Pgn
     }
   }
 
-  std::shared_ptr<PgnMove> PgnParser::ParseMove()
+  std::shared_ptr<PgnMove> PgnParser::ParseMove(const Chessboard& board)
   {
     assert(current_token_->type() == WORD);
 
-    // When this function is called we simply need to create a PgnMove with 
-    // the current (WORD) token.
-    std::shared_ptr<PgnMove> move(new PgnMove(current_token_->value()));
+    std::shared_ptr<PgnMove> move(new PgnMove(ParseSanMove(board, current_token_->value())));
     ReadNextToken();
+
     return move;
   }
 
@@ -184,12 +184,17 @@ namespace Pgn
   // object instead of creating the variation itself. This allow the client
   // code to pass a pointer to a PgnVariation or a downcasted pointer to a
   // PgnGame.
-  void PgnParser::ParseVariation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation)
+  void PgnParser::ParseVariation(Chessboard board, unsigned int first_move_number, bool first_move_white, PgnVariation* variation)
   {
     bool is_sub_variation = false;
          
     // This will contains the number of move parsed in this variation.
     unsigned int number_move_parsed = 0;
+
+    // This contains the last move parsed. The last move is not added to the 
+    // board right away, because the board position might still need to be 
+    // passed to sub variations.
+    std::shared_ptr<PgnMove> last_move_parsed;
 
     // If the current token is an opening parenthesis, we are parsing a sub 
     // variation. We take note and skip the parenthesis.
@@ -220,10 +225,18 @@ namespace Pgn
       }
       else if (current_token_->type() == WORD)
       {
+        // If there was a move parsed not yet played on the board we make it.
+        if (last_move_parsed)
+        {
+          board.MakeMove(last_move_parsed->from(), last_move_parsed->to(), last_move_parsed->promotion_piece_type());
+        }
+
         // If the current token is a word we parse it as a move.
-        std::shared_ptr<PgnMoveTextItem> item = ParseMove();
-        variation->push_back(item);
+        std::shared_ptr<PgnMove> move = ParseMove(board);
+        variation->push_back(move);
         ++number_move_parsed;
+        
+        last_move_parsed = move;
       }
       else if (current_token_->type() == SYMBOL && current_token_->value() == ".")
       {
@@ -263,7 +276,7 @@ namespace Pgn
         unsigned int next_move_index = first_move_index + number_move_parsed - 1;
         unsigned int next_move_number = (next_move_index + 1) / 2;
         bool next_move_white = next_move_index % 2;
-        ParseVariation(next_move_number, next_move_white, sub_variation.get());
+        ParseVariation(board, next_move_number, next_move_white, sub_variation.get());
 
         variation->push_back(sub_variation);
       }
@@ -330,7 +343,8 @@ namespace Pgn
     ParseTags(game.tags());
 
     // We parse the moves
-    ParseVariation(1, true, &game);
+    Chessboard board;
+    ParseVariation(board, 1, true, &game);
 
     game.set_result(ParseResult());
 

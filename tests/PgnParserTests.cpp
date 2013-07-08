@@ -19,10 +19,10 @@ namespace Pgn
       CHECK_EQUAL("2010.02.21", game.tags()["Date"]);
 
       std::shared_ptr<PgnMove> move = std::static_pointer_cast<PgnMove>(game[0]);
-      CHECK_EQUAL("e4", move->move());
+      CHECK_EQUAL(28u, move->to());
 
       move = std::static_pointer_cast<PgnMove>(*(game.end() - 1));
-      CHECK_EQUAL("Nb5", move->move());
+      CHECK_EQUAL(33u, move->to());
 
 /*
       for (std::shared_ptr<PgnMoveTextItem> item: game)
@@ -80,7 +80,7 @@ namespace Pgn
 
       std::shared_ptr<PgnMove> move = std::dynamic_pointer_cast<PgnMove>(*variation->begin());
       CHECK(move);
-      CHECK(move->move() == "Nc3");
+      CHECK(move->to() == 18);
     }
 
     TEST(ParseComment)

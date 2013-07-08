@@ -10,6 +10,7 @@
 #include "PgnMove.hpp"
 #include "PgnNag.hpp"
 #include "PgnComment.hpp"
+#include "Chessboard.hpp"
 
 namespace Pgn
 {
@@ -58,8 +59,8 @@ namespace Pgn
     void CheckExpectedTokenValue(const std::string& value);
 
     void ParseTags(PgnTags& tags);
-    void ParseVariation(unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
-    std::shared_ptr<PgnMove> ParseMove();
+    void ParseVariation(Chessboard board, unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
+    std::shared_ptr<PgnMove> ParseMove(const Chessboard& board);
     std::shared_ptr<PgnNag> ParseNag();
     std::shared_ptr<PgnNag> ParseSuffixAnnotation();
     std::shared_ptr<PgnComment> ParseComment();

@@ -220,7 +220,7 @@ namespace Pgn
     return pinned;
   }
 
-  void Chessboard::MakeMove(Position from, Position to, Piece promotion_piece)
+  void Chessboard::MakeMove(Position from, Position to, PieceType promotion_piece_type)
   {
     Piece piece = board_[from];
 
@@ -230,6 +230,18 @@ namespace Pgn
     uint_fast8_t file_from = from % 8;
     uint_fast8_t rank_to = to / 8;
     uint_fast8_t file_to = to % 8;
+
+    // If there is no piece on the from square we throw an exception
+    if (piece.type() == PieceType::NONE)
+    {
+      throw InvalidMakeMoveException("No piece on the from square");
+    }
+
+    // If the moved piece is not from the color on move we throw an exception.
+    if (next_to_move_ != piece.color())
+    {
+      throw InvalidMakeMoveException("Piece from the wrong side");
+    }
 
     // If it's a prise en passant. We detect the prise en passant by the 
     // fact that 1) the move is diagonal, 2) There is no piece on the target 
@@ -267,7 +279,7 @@ namespace Pgn
       }
       else
       {
-        // TODO : We should throw an exception.
+        throw InvalidMakeMoveException("Invalid king (castle?) move");
       }
     }
 
@@ -276,10 +288,10 @@ namespace Pgn
     AddPiece(to, piece);
 
     // If it's a promotion we need to change the pawn into the promoted piece.
-    if (promotion_piece.type() != PieceType::NONE)
+    if (promotion_piece_type != PieceType::NONE)
     {
       RemovePiece(to);
-      AddPiece(to, promotion_piece);
+      AddPiece(to, Piece(promotion_piece_type, piece.color()));
     }
 
     // If it's a two square pawn move we must set the en_passant_column_.
@@ -307,5 +319,7 @@ namespace Pgn
         castling_flags_ &= ~(static_cast<uint_fast8_t>(Castle::KING_SIDE) << static_cast<uint_fast8_t>(piece.color()));
       }
     }
+    
+    next_to_move_ = GetOtherSide(next_to_move_);
   }
 }
