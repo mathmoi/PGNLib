@@ -1,6 +1,7 @@
 #ifndef INCLUDE_PGN_TAGS_HPP_
 #define INCLUDE_PGN_TAGS_HPP_
 
+#include <set>
 #include <map>
 #include <string>
 
@@ -9,13 +10,12 @@ namespace Pgn
   class PgnTags
   {
   public:
-    typedef std::map<std::string, std::string, bool (*)(const std::string&, const std::string&)> tags_map;
+    typedef std::map<std::string, std::string> tags_map;
     typedef tags_map::iterator iterator;
     typedef tags_map::const_iterator const_iterator;
 
   private:
-    static const std::map<std::string, unsigned int> STR;
-    static bool TagsCompare(const std::string& t1, const std::string& t2);
+    static const std::set<std::string> STR;
 
     tags_map tags_;
 
