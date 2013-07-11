@@ -60,6 +60,7 @@ namespace Pgn
       break;
 
     case PieceType::NONE:
+      throw InvalidMoveException();
       break;
     }
 
