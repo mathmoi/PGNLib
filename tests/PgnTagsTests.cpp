@@ -1,4 +1,3 @@
-#include <iostream> // TODO : enlever
 #include <string>
 
 #include "../libs/UnitTest++/include/UnitTest++.h"

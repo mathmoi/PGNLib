@@ -1,6 +1,5 @@
 #include <cctype>
 #include <cassert>
-#include <iostream> // TODO : Remove this
 
 #include "PgnTokenizer.hpp"
 #include "PgnToken.hpp"

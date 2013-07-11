@@ -1,7 +1,5 @@
 #include <string>
 #include <sstream>
-#include <fstream> // TODO : remove
-#include <iostream> // TODO : remove
 
 #include "../libs/UnitTest++/include/UnitTest++.h"
 

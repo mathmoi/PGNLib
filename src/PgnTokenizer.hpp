@@ -4,7 +4,6 @@
 #include <istream>
 #include <string>
 #include <stdexcept>
-#include <iostream> // TODO: remove
 
 #include "PgnToken.hpp"
 

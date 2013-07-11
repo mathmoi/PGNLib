@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 
 #include "../libs/UnitTest++/include/UnitTest++.h"
 
