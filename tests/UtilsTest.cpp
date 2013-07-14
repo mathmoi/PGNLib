@@ -3,7 +3,7 @@
 
 #include "../libs/UnitTest++/include/UnitTest++.h"
 
-#include "../src/Utils.hpp"
+#include "../include/Utils.hpp"
 
 namespace Pgn
 {

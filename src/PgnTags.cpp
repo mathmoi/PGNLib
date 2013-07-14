@@ -1,4 +1,4 @@
-#include "PgnTags.hpp"
+#include "../include/PgnTags.hpp"
 
 namespace Pgn
 {

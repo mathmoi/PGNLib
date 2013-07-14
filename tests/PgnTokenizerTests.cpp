@@ -3,7 +3,7 @@
 
 #include "../libs/UnitTest++/include/UnitTest++.h"
 
-#include "../src/PgnTokenizer.hpp"
+#include "../include/PgnTokenizer.hpp"
 
 namespace Pgn
 {

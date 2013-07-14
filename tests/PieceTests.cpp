@@ -2,7 +2,7 @@
 
 #include "../libs/UnitTest++/include/UnitTest++.h"
 
-#include "../src/Piece.hpp"
+#include "../include/Piece.hpp"
 
 namespace Pgn
 {

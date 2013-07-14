@@ -1,7 +1,7 @@
 #include <cassert>
 
-#include "PgnParser.hpp"
-#include "SANParser.hpp"
+#include "../include/PgnParser.hpp"
+#include "../include/SANParser.hpp"
 
 namespace Pgn
 {

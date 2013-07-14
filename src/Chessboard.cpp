@@ -3,9 +3,9 @@
 #include <unordered_map>
 #include <cstdlib>
 
-#include "Chessboard.hpp"
-#include "Utils.hpp"
-#include "Bitboard.hpp"
+#include "../include/Chessboard.hpp"
+#include "../include/Utils.hpp"
+#include "../include/Bitboard.hpp"
 
 namespace Pgn
 {

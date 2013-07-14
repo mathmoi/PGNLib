@@ -1,5 +1,5 @@
-#include "Bitboard.hpp"
-#include "BitboardConstants.hpp"
+#include "../include/Bitboard.hpp"
+#include "../include/BitboardConstants.hpp"
 
 namespace Pgn
 {

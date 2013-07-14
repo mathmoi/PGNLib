@@ -1,7 +1,7 @@
 #include "../libs/UnitTest++/include/UnitTest++.h"
 
-#include "../src/Bitboard.hpp"
-#include "../src/BitboardConstants.hpp"
+#include "../include/Bitboard.hpp"
+#include "../include/BitboardConstants.hpp"
 
 namespace Pgn
 {

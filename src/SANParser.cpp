@@ -1,4 +1,4 @@
-#include "SANParser.hpp"
+#include "../include/SANParser.hpp"
 
 namespace Pgn
 {
@@ -6,7 +6,7 @@ namespace Pgn
   {
     // First we get a bitboard of the candidates origins. The way to get it 
     // depends on the piece type.
-    Bitboard candidates;
+    Bitboard candidates = 0;
     switch (p.type())
     {
     case PieceType::ROOK:

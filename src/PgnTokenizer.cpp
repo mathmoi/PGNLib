@@ -1,8 +1,8 @@
 #include <cctype>
 #include <cassert>
 
-#include "PgnTokenizer.hpp"
-#include "PgnToken.hpp"
+#include "../include/PgnTokenizer.hpp"
+#include "../include/PgnToken.hpp"
 
 namespace Pgn
 {

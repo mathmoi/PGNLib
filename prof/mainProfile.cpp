@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-#include "../src/PgnParser.hpp"
+#include "../include/PgnParser.hpp"
 
 int main(int argc, char* argv[])
 {

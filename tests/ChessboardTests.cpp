@@ -2,7 +2,7 @@
 
 #include "../libs/UnitTest++/include/UnitTest++.h"
 
-#include "../src/Chessboard.hpp"
+#include "../include/Chessboard.hpp"
 
 namespace Pgn
 {
