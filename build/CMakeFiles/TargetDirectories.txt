@@ -1,0 +1,6 @@
+/home/mathmoi/pgnparser/build/libs/unittest-cpp/CMakeFiles/TestUnitTest++.dir
+/home/mathmoi/pgnparser/build/libs/unittest-cpp/CMakeFiles/UnitTest++.dir
+/home/mathmoi/pgnparser/build/libs/unittest-cpp/CMakeFiles/check.dir
+/home/mathmoi/pgnparser/build/src/CMakeFiles/pgn.dir
+/home/mathmoi/pgnparser/build/prof/CMakeFiles/pgnparser-prof.dir
+/home/mathmoi/pgnparser/build/tests/CMakeFiles/pgnparser-tests.dir

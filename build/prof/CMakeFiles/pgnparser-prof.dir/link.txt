@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -Wall -pedantic -O3 -DNDEBUG    CMakeFiles/pgnparser-prof.dir/mainProfile.cpp.o  -o pgnparser-prof -rdynamic ../libs/unittest-cpp/libUnitTest++.a ../src/libpgn.a 

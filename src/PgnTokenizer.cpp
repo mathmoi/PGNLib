@@ -14,7 +14,7 @@ namespace Pgn
     // We need skip the white spaces so if the user call eof() we can return 
     // true or false.
     SkipWhiteSpaces();
-  };
+  }
 
   void PgnTokenizer::ReadNextChar()
   {

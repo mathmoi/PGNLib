@@ -1,8 +1,7 @@
 #include <string>
 
-#include "../libs/UnitTest++/include/UnitTest++.h"
-
-#include "../include/PgnTags.hpp"
+#include <UnitTest++.h>
+#include <PgnTags.hpp>
 
 namespace Pgn
 {

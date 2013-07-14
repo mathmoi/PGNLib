@@ -1,7 +1,7 @@
-#include "../libs/UnitTest++/include/UnitTest++.h"
+#include <UnitTest++.h>
 
-#include "../include/SANParser.hpp"
-#include "../include/Chessboard.hpp"
+#include <SANParser.hpp>
+#include <Chessboard.hpp>
 
 namespace Pgn
 {

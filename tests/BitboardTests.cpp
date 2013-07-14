@@ -1,4 +1,4 @@
-#include "../libs/UnitTest++/include/UnitTest++.h"
+#include <UnitTest++.h>
 
 #include "../include/Bitboard.hpp"
 #include "../include/BitboardConstants.hpp"

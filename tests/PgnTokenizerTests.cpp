@@ -1,9 +1,8 @@
 #include <string>
 #include <sstream>
 
-#include "../libs/UnitTest++/include/UnitTest++.h"
-
-#include "../include/PgnTokenizer.hpp"
+#include <UnitTest++.h>
+#include <PgnTokenizer.hpp>
 
 namespace Pgn
 {

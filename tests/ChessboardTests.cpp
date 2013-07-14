@@ -1,8 +1,8 @@
 #include <cstdint>
 
-#include "../libs/UnitTest++/include/UnitTest++.h"
+#include <UnitTest++.h>
 
-#include "../include/Chessboard.hpp"
+#include <Chessboard.hpp>
 
 namespace Pgn
 {

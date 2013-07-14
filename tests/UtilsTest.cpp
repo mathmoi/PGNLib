@@ -1,9 +1,8 @@
 #include <string>
 #include <vector>
 
-#include "../libs/UnitTest++/include/UnitTest++.h"
-
-#include "../include/Utils.hpp"
+#include <UnitTest++.h>
+#include <Utils.hpp>
 
 namespace Pgn
 {

@@ -1,8 +1,7 @@
 #include <fstream>
 
-#include "../libs/UnitTest++/include/UnitTest++.h"
-
-#include "../include/Piece.hpp"
+#include <UnitTest++.h>
+#include <Piece.hpp>
 
 namespace Pgn
 {
