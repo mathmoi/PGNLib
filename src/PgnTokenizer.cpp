@@ -71,7 +71,7 @@ namespace Pgn
 
     do {
       StoreCurrentCharReadNext();
-    } while (std::isalpha(current_char_)
+    } while (std::isalpha(static_cast<unsigned char>(current_char_))
              || std::isdigit(current_char_)
              || current_char_ == '+'
              || current_char_ == '#'
@@ -156,10 +156,10 @@ namespace Pgn
 
   PgnToken PgnTokenizer::ReadResultToken()
   {
-    assert(std::isdigit(current_char_) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/');
+    assert(std::isdigit(static_cast<unsigned char>(current_char_)) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/');
 
     StoreCurrentCharReadNext();
-    while (std::isdigit(current_char_) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/')
+    while (std::isdigit(static_cast<unsigned char>(current_char_)) || current_char_ == '*' || current_char_ == '-' || current_char_ == '/')
     {
       StoreCurrentCharReadNext();
     }
@@ -172,10 +172,10 @@ namespace Pgn
 
   PgnToken PgnTokenizer::ReadNumberToken()
   {
-    assert(std::isdigit(current_char_));
+    assert(std::isdigit(static_cast<unsigned char>(current_char_)));
 
     StoreCurrentCharReadNext();
-    while (std::isdigit(current_char_))
+    while (std::isdigit(static_cast<unsigned char>(current_char_)))
     {
       StoreCurrentCharReadNext();
     }
@@ -212,7 +212,7 @@ namespace Pgn
       throw EndOfStreamException();
     }
 
-    if (std::isalpha(current_char_))
+    if (std::isalpha(static_cast<unsigned char>(current_char_)))
     {
       return ReadWordToken();
     }
@@ -237,7 +237,7 @@ namespace Pgn
     //  1) The token is a result, in wich case the next character is a '-' or a
     //      '/'.
     //  2) In other cases the token is a number
-    if (std::isdigit(current_char_))
+    if (std::isdigit(static_cast<unsigned char>(current_char_)))
     {
       if (ptr_is_->peek() == '-' || ptr_is_->peek() == '/')
       {

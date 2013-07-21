@@ -87,7 +87,7 @@ namespace Pgn
       {
         // We ignore the '/' character
       }
-      else if (std::isdigit(c))
+      else if (std::isdigit(static_cast<unsigned char>(c)))
       {
         // If the character is a digit we increment the position counter and 
         // we check it does not get greater than 64. If it is we throw 
