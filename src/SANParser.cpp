@@ -130,12 +130,12 @@ namespace Pgn
     else
     {
       auto begin = san.begin();
-      auto end = san.end() - 1;
+      auto end = san.rbegin();
 
       // If the last charater is a check or mat indicator we ignore it.
       if (*end == '#' || *end == '+')
       {
-        --end;
+        ++end;
       }
 
       // If the last character is a piece it's a promotion piece
@@ -144,7 +144,7 @@ namespace Pgn
         try
         {
           promotion_piece_type = CHAR_TO_PIECE_TYPE_MAP.at(*end);
-          end -= 2;
+          end += 2;
         }
         catch (std::out_of_range)
         {
@@ -154,9 +154,9 @@ namespace Pgn
 
       // The two last characters are the line and column of the destination
       uint_fast8_t rank_index = *end - '1';
-      --end;
+      ++end;
       uint_fast8_t file_index = *end - 'a';
-      --end;
+      ++end;
       to = rank_index * 8 + file_index;
 
       // If the target square is invalid we throw an exception
@@ -167,7 +167,7 @@ namespace Pgn
 
       // If the first character is a piece it's moved piece, otherwise the moved piece 
       // is a pawn.
-      if (begin <= end && *begin >= 'A' && *begin <= 'Z')
+      if (end < san.rend() && begin <= (end.base() - 1) && *begin >= 'A' && *begin <= 'Z')
       {
         try
         {
@@ -185,7 +185,7 @@ namespace Pgn
       }
 
       // If there is a 'x' character at the end it means the move is a capture
-      if (begin <= end && *end == 'x')
+      if (end < san.rend() && begin <= (end.base() - 1) && *end == 'x')
       {
         // If this is a prise en passant
         if (piece.type() == PieceType::PAWN
@@ -199,7 +199,7 @@ namespace Pgn
           captured_piece = board[to];
         }
         is_capture = true;
-        --end;
+        ++end;
 
         // if the captured piece is NONE or of the side to move next we throw 
         // an exception
@@ -212,7 +212,7 @@ namespace Pgn
 
       // if the first character is a file, it's the origin file. In that 
       // case we must restrict bb_from_candidates to that file.
-      if (begin <= end && *begin >= 'a' && *begin <= 'h')
+      if (end < san.rend() && begin <= (end.base() - 1) && *begin >= 'a' && *begin <= 'h')
       {
         uint_fast8_t file_index = *begin - 'a';
         bb_from_candidates = bb_files[file_index];
@@ -221,7 +221,7 @@ namespace Pgn
 
       // If the first character rank, it's the origin rank, In that cast we 
       // must restrict bb_from_candidates to that rank.
-      if (begin <= end && *begin >= '1' && *begin <= '8')
+      if (end < san.rend() && begin <= (end.base() - 1) && *begin >= '1' && *begin <= '8')
       {
         uint_fast8_t rank_index = *begin - '1';
         bb_from_candidates &= bb_ranks[rank_index * 8];
@@ -229,7 +229,7 @@ namespace Pgn
       }
 
       // If we still have characters to parse we throw an exception
-      if (begin <= end)
+      if (end < san.rend() && begin <= (end.base() - 1))
       {
         throw InvalidMoveException();
       }
