@@ -116,7 +116,7 @@ namespace Pgn
       throw UnexpectedTokenException();
     }
 
-    std::shared_ptr<PgnNag> nag(new PgnNag(n));
+    std::shared_ptr<PgnNag> nag(new PgnNag(static_cast<uint8_t>(n)));
     ReadNextToken();
     return nag;
   }
@@ -275,7 +275,7 @@ namespace Pgn
         unsigned int first_move_index = first_move_number * 2 - (first_move_white ? 1 : 0);
         unsigned int next_move_index = first_move_index + number_move_parsed - 1;
         unsigned int next_move_number = (next_move_index + 1) / 2;
-        bool next_move_white = next_move_index % 2;
+        bool next_move_white = (next_move_index % 2) != 0;
         ParseVariation(board, next_move_number, next_move_white, sub_variation.get());
 
         variation->push_back(sub_variation);

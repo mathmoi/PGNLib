@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <cstdlib>
+#include <cctype>
 
 #include "../include/Chessboard.hpp"
 #include "../include/Utils.hpp"
@@ -226,10 +227,10 @@ namespace Pgn
 
     uint_fast8_t first_rank = static_cast<uint_fast8_t>(piece.color()) * 7;
 
-    uint_fast8_t rank_from = from / 8;
-    uint_fast8_t file_from = from % 8;
-    uint_fast8_t rank_to = to / 8;
-    uint_fast8_t file_to = to % 8;
+	  uint_fast8_t rank_from = static_cast<uint_fast8_t>(from / 8);
+  	uint_fast8_t file_from = static_cast<uint_fast8_t>(from % 8);
+    uint_fast8_t rank_to = static_cast<uint_fast8_t>(to / 8);
+    uint_fast8_t file_to = static_cast<uint_fast8_t>(to % 8);
 
     // If there is no piece on the from square we throw an exception
     if (piece.type() == PieceType::NONE)
@@ -247,7 +248,7 @@ namespace Pgn
     // fact that 1) the move is diagonal, 2) There is no piece on the target 
     // square and 3) the target square is on the en_passant_column.
     if (piece.type() == PieceType::PAWN
-        && abs(from % 8 - to % 8) == 1
+        && abs(static_cast<int>(from % 8) - static_cast<int>(to % 8)) == 1
         && board_[to].type() == PieceType::NONE
         && to % 8 == en_passant_column_)
     {
@@ -264,7 +265,7 @@ namespace Pgn
     // If it's a two square king move we must move the rook accordingly to 
     // castle rules.
     if (piece.type() == PieceType::KING
-        && abs(from - to) == 2)
+        && abs(static_cast<int>(from) - static_cast<int>(to)) == 2)
     {
       // If it's a queen side castle
       if (file_to == 2)
@@ -296,7 +297,7 @@ namespace Pgn
 
     // If it's a two square pawn move we must set the en_passant_column_.
     if (piece.type() == PieceType::PAWN
-        && abs(from - to) == 16)
+        && abs(static_cast<int>(from) - static_cast<int>(to)) == 16)
     {
       en_passant_column_ = file_from;
     }

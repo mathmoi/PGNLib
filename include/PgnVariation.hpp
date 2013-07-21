@@ -28,11 +28,14 @@ namespace Pgn
     typedef ItemsVector::const_iterator const_iterator;
 
   private:
-    unsigned int first_move_number_ = 0;
-    bool first_move_white_ = true;
+    unsigned int first_move_number_;
+    bool first_move_white_;
     ItemsVector items_;
 
   public:
+	inline PgnVariation()
+	  : first_move_number_(0),
+		first_move_white_(true) {};
     inline void set_first_move_number(unsigned int first_move_number) { first_move_number_ = first_move_number; };
     inline unsigned int first_move_number() const { return first_move_number_; };
 

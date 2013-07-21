@@ -2,10 +2,11 @@
 #define INCLUDE_PIECE_HPP_
 
 #include <unordered_map>
+#include <cstdint>
 
 namespace Pgn
 {
-  enum class Color : std::uint_fast8_t
+  enum class Color : uint_fast8_t
   {
     WHITE = 0,
     BLACK = 1
@@ -54,7 +55,7 @@ namespace Pgn
      inline PieceType type() const { return static_cast<PieceType>(piece_ & ~1); };
      inline Color color() const { return static_cast<Color>(piece_ & 1); };
 
-     inline bool slide() const { return piece_ & 8; };
+     inline bool slide() const { return (piece_ & 8) != 0; };
      inline bool slide_like_rook() const { return (piece_ & 6) == 6; }
 
      inline operator size_t() const { return piece_; };

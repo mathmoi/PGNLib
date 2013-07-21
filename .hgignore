@@ -1,6 +1,6 @@
 regexp syntax
 
-^\.sconsign\.dblite$
+^build/
 
 # Linux/vim specifics
 \.swp$

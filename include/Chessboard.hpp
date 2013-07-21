@@ -79,7 +79,7 @@ namespace Pgn
     inline Color next_to_move() const { return next_to_move_; };
     inline Piece operator[] (Position p) const { return board_[p]; };
     inline size_t en_passant_column () const { return en_passant_column_; };
-    inline bool castling_flag(Color color, Castle castle) const { return castling_flags_ & (static_cast<uint_fast8_t>(castle) << static_cast<uint_fast8_t>(color)); };  
+    inline bool castling_flag(Color color, Castle castle) const { return (castling_flags_ & (static_cast<uint_fast8_t>(castle) << static_cast<uint_fast8_t>(color))) != 0; };  
 
     void MakeMove(Position from, Position to, PieceType promotion_piece_type);
 

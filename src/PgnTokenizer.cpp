@@ -18,7 +18,7 @@ namespace Pgn
 
   void PgnTokenizer::ReadNextChar()
   {
-    current_char_ = ptr_is_->good() ? ptr_is_->get() : '\0';
+    current_char_ = ptr_is_->good() ? static_cast<char>(ptr_is_->get()) : '\0';
   }
 
   void PgnTokenizer::StoreCurrentCharReadNext()
