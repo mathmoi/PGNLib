@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../include/PgnParser.hpp"
 
-int main(int argc, char* argv[])
+int main(int , char**)
 {
   std::ifstream in("/home/mathmoi/Desktop/IB1310B.pgn");
   Pgn::PgnParser parser(&in);

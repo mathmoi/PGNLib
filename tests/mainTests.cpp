@@ -2,7 +2,7 @@
 
 using namespace UnitTest;
 
-int main (int argc, char* argv[])
+int main (int, char**)
 {
    return RunAllTests();
 }
