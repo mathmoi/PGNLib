@@ -2,7 +2,13 @@
 
 namespace Pgn
 {
-  const std::set<std::string> PgnTags::STR = {"Event", "Site", "Date", "Round", "White", "Black", "Result"};
+  std::set<std::string> CreateSTR()
+  {
+    static const std::string s[] = {"Event", "Site", "Date", "Round", "White", "Black", "Result"};
+    std::set<std::string> str(s, s + 7);
+    return str;
+  }
+  const std::set<std::string> PgnTags::STR = CreateSTR();
 
   PgnTags::PgnTags()
     : tags_()

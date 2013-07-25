@@ -10,6 +10,39 @@
 
 namespace Pgn
 {
+  std::unordered_map<char, Piece> CreateCharPieceMap()
+  {
+    std::unordered_map<char, Piece> map;
+    map['R'] = Piece(PieceType::ROOK, Color::WHITE);
+    map['r'] = Piece(PieceType::ROOK, Color::BLACK);
+    map['N'] = Piece(PieceType::KNIGHT, Color::WHITE); 
+    map['n'] = Piece(PieceType::KNIGHT, Color::BLACK);
+    map['B'] = Piece(PieceType::BISHOP, Color::WHITE); 
+    map['b'] = Piece(PieceType::BISHOP, Color::BLACK);
+    map['Q'] = Piece(PieceType::QUEEN, Color::WHITE); 
+    map['q'] = Piece(PieceType::QUEEN, Color::BLACK);
+    map['K'] = Piece(PieceType::KING, Color::WHITE); 
+    map['k'] = Piece(PieceType::KING, Color::BLACK);
+    map['P'] = Piece(PieceType::PAWN, Color::WHITE); 
+    map['p'] = Piece(PieceType::PAWN, Color::BLACK);
+    return map;
+  }
+
+  const std::unordered_map<char, Piece> CHAR_PIECE_MAP = CreateCharPieceMap();
+  
+  // Map characters to castling flags
+  std::unordered_map<char, uint_fast8_t> CreateCharCastlingFlagsMap()
+  {
+    std::unordered_map<char, uint_fast8_t> map;
+    map['K'] = static_cast<uint_fast8_t>(Castle::KING_SIDE) << static_cast<uint_fast8_t>(Color::WHITE);
+    map['Q'] = static_cast<uint_fast8_t>(Castle::QUEEN_SIDE) << static_cast<uint_fast8_t>(Color::WHITE);
+    map['k'] = static_cast<uint_fast8_t>(Castle::KING_SIDE) << static_cast<uint_fast8_t>(Color::BLACK);
+    map['q'] = static_cast<uint_fast8_t>(Castle::QUEEN_SIDE) << static_cast<uint_fast8_t>(Color::BLACK);
+    return map;
+  }
+
+  const std::unordered_map<char, uint_fast8_t> CHAR_CASTLING_FLAGS_MAP = CreateCharCastlingFlagsMap();
+          
   void Chessboard::Empty()
   {
     next_to_move_ = Color::WHITE;
@@ -108,16 +141,7 @@ namespace Pgn
           throw BadFenException();
         }
 
-        // This map is used to convert from char to Piece types.
-        static const std::unordered_map<char, Piece> CHAR_PIECE_MAP =
-          {
-            {'R', Piece(PieceType::ROOK, Color::WHITE)}, {'r', Piece(PieceType::ROOK, Color::BLACK)},
-            {'N', Piece(PieceType::KNIGHT, Color::WHITE)}, {'n', Piece(PieceType::KNIGHT, Color::BLACK)},
-            {'B', Piece(PieceType::BISHOP, Color::WHITE)}, {'b', Piece(PieceType::BISHOP, Color::BLACK)},
-            {'Q', Piece(PieceType::QUEEN, Color::WHITE)}, {'q', Piece(PieceType::QUEEN, Color::BLACK)},
-            {'K', Piece(PieceType::KING, Color::WHITE)}, {'k', Piece(PieceType::KING, Color::BLACK)},
-            {'P', Piece(PieceType::PAWN, Color::WHITE)}, {'p', Piece(PieceType::PAWN, Color::BLACK)}
-          };
+        
 
         try
         {
@@ -155,15 +179,6 @@ namespace Pgn
     // no castling right and we have nothing to do.
     if (fen_tokens[2] != "-")
     {
-      // Map characters to castling flags
-      static const std::unordered_map<char, uint_fast8_t> CHAR_CASTLING_FLAGS_MAP = 
-        {
-          {'K', static_cast<uint_fast8_t>(Castle::KING_SIDE) << static_cast<uint_fast8_t>(Color::WHITE)},
-          {'Q', static_cast<uint_fast8_t>(Castle::QUEEN_SIDE) << static_cast<uint_fast8_t>(Color::WHITE)},
-          {'k', static_cast<uint_fast8_t>(Castle::KING_SIDE) << static_cast<uint_fast8_t>(Color::BLACK)},
-          {'q', static_cast<uint_fast8_t>(Castle::QUEEN_SIDE) << static_cast<uint_fast8_t>(Color::BLACK)}
-        };
-
       for (char c : fen_tokens[2])
       {
         try

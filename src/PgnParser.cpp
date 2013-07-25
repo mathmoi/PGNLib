@@ -5,6 +5,20 @@
 
 namespace Pgn
 {
+  std::map<std::string, PgnResult> CreateResultMap()
+  {
+    std::map<std::string, PgnResult> map;
+    map["1-0"] = PgnResult::WHITE_WIN;
+    map["1-O"] = PgnResult::WHITE_WIN;
+    map["0-1"] = PgnResult::BLACK_WIN;
+    map["O-1"] = PgnResult::BLACK_WIN;
+    map["1/2-1/2"] = PgnResult::DRAW;
+    map["*"] = PgnResult::UNKNOWN;
+    return map;
+  }
+  const std::map<std::string, PgnResult> RESULT_MAP = CreateResultMap();
+
+
   void PgnParser::ReadNextToken()
   {
     if (tokenizer_.eof())
@@ -307,16 +321,6 @@ namespace Pgn
 
   PgnResult PgnParser::ParseResult()
   {
-    static const std::map<std::string, PgnResult> RESULT_MAP = 
-    {
-      {"1-0", PgnResult::WHITE_WIN},
-      {"1-O", PgnResult::WHITE_WIN},
-      {"0-1", PgnResult::BLACK_WIN},
-      {"O-1", PgnResult::BLACK_WIN},
-      {"1/2-1/2", PgnResult::DRAW},
-      {"*", PgnResult::UNKNOWN}
-    };
-
     CheckExpectedTokenType(RESULT);
 
     PgnResult result = PgnResult::UNKNOWN;

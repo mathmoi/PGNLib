@@ -28,15 +28,19 @@ namespace Pgn
     KING = 6
   };
 
-  const std::unordered_map<char, PieceType> CHAR_TO_PIECE_TYPE_MAP =
-    {
-      {'R', PieceType::ROOK},
-      {'N', PieceType::KNIGHT},
-      {'B', PieceType::BISHOP},
-      {'Q', PieceType::QUEEN},
-      {'K', PieceType::KING},
-      {'P', PieceType::PAWN},
-    };
+  inline std::unordered_map<char, PieceType> CreateCharToPieceTypeMap()
+  {
+     std::unordered_map<char, PieceType> map;
+     map['R'] = PieceType::ROOK;
+     map['N'] = PieceType::KNIGHT;
+     map['B'] = PieceType::BISHOP;
+     map['Q'] = PieceType::QUEEN;
+     map['K'] = PieceType::KING;
+     map['P'] = PieceType::PAWN;
+     return map;
+  }
+
+  static const std::unordered_map<char, PieceType> CHAR_TO_PIECE_TYPE_MAP = CreateCharToPieceTypeMap();
 
   class Piece
   {
