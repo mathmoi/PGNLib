@@ -44,6 +44,6 @@ Example
 Author
 ------
 
-* [Mathieu Pagé][]
+* [Mathieu Pagé][] <m@mathieupage.com>
 
 [Mathieu Pagé]: http://www.mathieupage.com
