@@ -33,17 +33,51 @@ to reuse in another application.
 Example
 -------
 
+Here is an example application showing how easy it is to parse PGN files with
+pgnparser. The application open a PGN files and for each games display the 
+names of the player and the coordinates of each moves. This demo can be found
+in the source tree in the directory example/example1.
+
     :::C++
     #include <iostream>
+    #include <fstream>
+    #include <PgnParser.hpp>
+    #include <memory>
 
-    int main (int, char**)
+    int main(int argc, char** argv)
     {
-      std::cout <<"Hello world!" <<std::endl;
+      // We try to open the pgn file
+      std::ifstream in(argv[1], std::ios_base::in);
+
+      Pgn::PgnParser parser(&in);
+
+      while(!parser.eof())
+      {
+        Pgn::PgnGame game = parser.ParseSingleGame();
+
+        // We display both players name.
+        std::cout <<game.tags()["White"] << " - " <<game.tags()["Black"] <<std::endl;
+
+        // We display all move in the format "from - to"
+        for (auto item : game)
+        {
+          std::shared_ptr<Pgn::PgnMove> move = std::dynamic_pointer_cast<Pgn::PgnMove>(item);
+          if (move)
+          {
+            std::cout <<static_cast<char>('a' + (move->from() % 8)) <<(move->from() / 8) + 1 <<" - " <<static_cast<char>('a' + (move->to() % 8)) <<(move->to() / 8) + 1 <<std::endl;
+          }
+        }
+
+        std::cout <<std::endl;
+      }
+
+      in.close();
+      return 0;
     }
 
 Author
 ------
 
-* [Mathieu Pagé][] <m@mathieupage.com>
+* [Mathieu Pagé][] (<m@mathieupage.com>)
 
 [Mathieu Pagé]: http://www.mathieupage.com
