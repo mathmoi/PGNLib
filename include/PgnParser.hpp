@@ -21,6 +21,14 @@ namespace Pgn
       : runtime_error("An unexpected token was found while parsing the pgn games.") {}
   };
 
+  /**
+   * Class that encapsulate the parser functionalities.
+   *
+   * This class is the main client interface to the parser functionalities. To
+   * parse a PGN file you need to create an instance of PgnParser and pass an
+   * istream to it's constructor. You then repeatedly call ParseSingleGame to
+   * get every games in the file.
+   */
   class PgnParser
   {
   private:
@@ -28,23 +36,46 @@ namespace Pgn
     std::unique_ptr<PgnToken> current_token_;
 
   public:
-    /*
-     * Constructor of the class. It takes a pointer to an istream on wich 
-     * it will read the games to parse.
+    /**
+     * Constructor of the class.
+     *
+     * You need to pass a pointer to a istream. It can be an already opened
+     * file an istringstream or any other istream on wich PGN games can be
+     * red. If the istream is a file it must be opened before the constructor
+     * is called and it must be closed by the calling code after all call to
+     * \ref ParseSingleGame.
+     *
+     * \param is std::istream on wich the parser will try to read PGN games.
      */
     inline PgnParser(std::istream* is)
       : tokenizer_(is),
         current_token_(new PgnToken(tokenizer_.GetNextToken()))
     {};
 
-    /*
+    /**
      * This function parse and return a single game.
+     *
+     * Before calling ParseSingleGame the client code should make sure that the
+     * end of the stream is not reached by calling \ref eof() first. To parse 
+     * multiples or all games of a file, ParseSingleGame must me called
+     * multiple times.
+     *
+     * \return A Pgn game object containing all the informations  of the 
+     * parsed game.
      */
     PgnGame ParseSingleGame();
 
-    /*
-     * Indicate if the eof the stream is reached. If not, we should be able to 
-     * read the next game with ParseSingleGame.
+    /**
+     * Indicate if the end of the stream is reached.
+     * 
+     * If not, we should be able to read the next game with 
+     * \ref ParseSingleGame.
+     *
+     * Client code should call this function before each call to 
+     * ParseSingleGame to makes sure there is still data to be parsed on the 
+     * stream.
+     * 
+     * \return True if there is still data on the strea, false otherwise. 
      */
     bool eof() const;
   
