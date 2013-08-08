@@ -20,6 +20,8 @@ namespace Pgn
         to_(to),
         promotion_piece_type_(promotion_piece_type)
     {};
+
+    inline PgnMoveTextItem* Clone() const { return new PgnMove(from_, to_, promotion_piece_type_); };
     
     inline Position from() const { return from_; };
     inline void set_from(Position from) { from_ = from; };

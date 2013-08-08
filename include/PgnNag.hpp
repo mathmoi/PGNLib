@@ -28,6 +28,8 @@ namespace Pgn
       : nag_(nag)
     {};
 
+    inline PgnMoveTextItem* Clone() const { return new PgnNag(nag_); };
+
     inline uint8_t nag() const { return nag_; };
     inline void set_nag(uint8_t nag) { nag_ = nag; };
   };

@@ -14,6 +14,8 @@ namespace Pgn
     inline PgnComment(const std::string& comment)
       : comment_(comment) {};
 
+    inline PgnMoveTextItem* Clone() const { return new PgnComment(comment_); };
+
     inline const std::string& comment() const { return comment_; };
     inline void set_comment(const std::string& comment) { comment_ = comment; };
   };

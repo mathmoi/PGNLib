@@ -19,7 +19,7 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 add_library(pgn 
-            Bitboard.cpp PgnParser.cpp PgnTokenizer.cpp Chessboard.cpp PgnTags.cpp SANParser.cpp)
+            Bitboard.cpp PgnParser.cpp PgnTokenizer.cpp Chessboard.cpp PgnTags.cpp SANParser.cpp PgnVariation.cpp)
 
 # add a target to generate API documentation with Doxygen
 find_package(Doxygen)

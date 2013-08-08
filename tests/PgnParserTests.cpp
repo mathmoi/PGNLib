@@ -16,22 +16,11 @@ namespace Pgn
       CHECK_EQUAL(11u, game.tags().size());
       CHECK_EQUAL("2010.02.21", game.tags()["Date"]);
 
-      std::shared_ptr<PgnMove> move = std::static_pointer_cast<PgnMove>(game[0]);
+      PgnMove* move = static_cast<PgnMove*>(game[0]);
       CHECK_EQUAL(28u, move->to());
 
-      move = std::static_pointer_cast<PgnMove>(*(game.end() - 1));
+      move = static_cast<PgnMove*>(*(game.end() - 1));
       CHECK_EQUAL(33u, move->to());
-
-/*
-      for (std::shared_ptr<PgnMoveTextItem> item: game)
-      {
-        if (std::dynamic_pointer_cast<PgnMove>(item))
-        {
-          std::shared_ptr<PgnMove> move = std::static_pointer_cast<PgnMove>(item);
-          std::cout <<move->move() <<std::endl;
-        }
-      }
-*/
 
       in.close();
     }
@@ -46,21 +35,10 @@ namespace Pgn
 
       CHECK_EQUAL(5u, game.end() - game.begin());
 
-      std::shared_ptr<PgnNag> nag = std::dynamic_pointer_cast<PgnNag>(*(game.begin() + 1));
+      PgnNag* nag = dynamic_cast<PgnNag*>(*(game.begin() + 1));
 
       CHECK(nag);
       CHECK_EQUAL(static_cast<uint8_t>(NAG::VERY_GOOD_MOVE), nag->nag());
-
-      /*for (std::shared_ptr<PgnMoveTextItem> item: game)
-      {
-        std::cout <<typeid(item).name() <<std::endl;
-
-        if (std::dynamic_pointer_cast<PgnMove>(item))
-        {
-          std::shared_ptr<PgnMove> move = std::static_pointer_cast<PgnMove>(item);
-          std::cout <<move->move() <<std::endl;
-        }
-      }*/
     }
 
     TEST(ParseSubVariation)
@@ -73,10 +51,10 @@ namespace Pgn
 
       CHECK_EQUAL(4u, game.end() - game.begin());
 
-      std::shared_ptr<PgnVariation> variation = std::dynamic_pointer_cast<PgnVariation>(*(game.begin() + 1));
+      PgnVariation* variation = dynamic_cast<PgnVariation*>(*(game.begin() + 1));
       CHECK(variation);
 
-      std::shared_ptr<PgnMove> move = std::dynamic_pointer_cast<PgnMove>(*variation->begin());
+      PgnMove* move = dynamic_cast<PgnMove*>(*variation->begin());
       CHECK(move);
       CHECK(move->to() == 18);
     }
@@ -91,11 +69,11 @@ namespace Pgn
 
       CHECK_EQUAL(6u, game.end() - game.begin());
 
-      std::shared_ptr<PgnComment> comment = std::dynamic_pointer_cast<PgnComment>(*(game.begin() + 1));
+      PgnComment* comment = dynamic_cast<PgnComment*>(*(game.begin() + 1));
       CHECK(comment);
       CHECK_EQUAL("wow", comment->comment());
 
-      comment = std::dynamic_pointer_cast<PgnComment>(*(game.begin() + 4));
+      comment = dynamic_cast<PgnComment*>(*(game.begin() + 4));
       CHECK(comment);
       CHECK_EQUAL(" super", comment->comment());
     }

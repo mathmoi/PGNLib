@@ -91,10 +91,10 @@ namespace Pgn
 
     void ParseTags(PgnTags& tags);
     void ParseVariation(Chessboard board, unsigned int first_move_number, bool first_move_white, PgnVariation* variation);
-    std::shared_ptr<PgnMove> ParseMove(const Chessboard& board);
-    std::shared_ptr<PgnNag> ParseNag();
-    std::shared_ptr<PgnNag> ParseSuffixAnnotation();
-    std::shared_ptr<PgnComment> ParseComment();
+    PgnMove* ParseMove(const Chessboard& board);
+    PgnNag* ParseNag();
+    PgnNag* ParseSuffixAnnotation();
+    PgnComment* ParseComment();
     PgnResult ParseResult();
   };
 }

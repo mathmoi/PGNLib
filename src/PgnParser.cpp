@@ -100,17 +100,17 @@ namespace Pgn
     }
   }
 
-  std::shared_ptr<PgnMove> PgnParser::ParseMove(const Chessboard& board)
+  PgnMove* PgnParser::ParseMove(const Chessboard& board)
   {
     assert(current_token_->type() == WORD);
 
-    std::shared_ptr<PgnMove> move(new PgnMove(ParseSanMove(board, current_token_->value())));
+    PgnMove* move = new PgnMove(ParseSanMove(board, current_token_->value()));
     ReadNextToken();
 
     return move;
   }
 
-  std::shared_ptr<PgnNag> PgnParser::ParseNag()
+  PgnNag* PgnParser::ParseNag()
   {
     SkipExpectedToken(SYMBOL, "$");
     CheckExpectedTokenType(NUMBER);
@@ -130,34 +130,34 @@ namespace Pgn
       throw UnexpectedTokenException();
     }
 
-    std::shared_ptr<PgnNag> nag(new PgnNag(static_cast<uint8_t>(n)));
+    PgnNag* nag = new PgnNag(static_cast<uint8_t>(n));
     ReadNextToken();
     return nag;
   }
 
-  std::shared_ptr<PgnNag> PgnParser::ParseSuffixAnnotation()
+  PgnNag* PgnParser::ParseSuffixAnnotation()
   {
     assert(current_token_->type() == SYMBOL);
     assert(current_token_->value() == "!" || current_token_->value() == "?");
 
-    std::shared_ptr<PgnNag> nag;
+    PgnNag* nag;
 
     if (current_token_->value() == "!")
     {
       ReadNextToken();
       if (current_token_->type() == SYMBOL && current_token_->value() == "!")
       {
-        nag.reset(new PgnNag(static_cast<uint8_t>(NAG::VERY_GOOD_MOVE)));
+        nag = new PgnNag(static_cast<uint8_t>(NAG::VERY_GOOD_MOVE));
         ReadNextToken();
       }
       else if (current_token_->type() == SYMBOL && current_token_->value() == "?")
       {
-        nag.reset(new PgnNag(static_cast<uint8_t>(NAG::SPECULATIVE_MOVE)));
+        nag = new PgnNag(static_cast<uint8_t>(NAG::SPECULATIVE_MOVE));
         ReadNextToken();
       }
       else
       {
-        nag.reset(new PgnNag(static_cast<uint8_t>(NAG::GOOD_MOVE)));
+        nag = new PgnNag(static_cast<uint8_t>(NAG::GOOD_MOVE));
       }
     }
     else if (current_token_->value() == "?")
@@ -165,17 +165,17 @@ namespace Pgn
       ReadNextToken();
       if (current_token_->type() == SYMBOL && current_token_->value() == "!")
       {
-        nag.reset(new PgnNag(static_cast<uint8_t>(NAG::QUESTIONABLE_MOVE)));
+        nag = new PgnNag(static_cast<uint8_t>(NAG::QUESTIONABLE_MOVE));
         ReadNextToken();
       }
       else if (current_token_->type() == SYMBOL && current_token_->value() == "?")
       {
-        nag.reset(new PgnNag(static_cast<uint8_t>(NAG::VERY_POOR_MOVE)));
+        nag = new PgnNag(static_cast<uint8_t>(NAG::VERY_POOR_MOVE));
         ReadNextToken();
       }
       else
       {
-        nag.reset(new PgnNag(static_cast<uint8_t>(NAG::POOR_MOVE)));
+        nag = new PgnNag(static_cast<uint8_t>(NAG::POOR_MOVE));
       }
     }
     else
@@ -185,11 +185,11 @@ namespace Pgn
     return nag;
   }
 
-  std::shared_ptr<PgnComment> PgnParser::ParseComment()
+  PgnComment* PgnParser::ParseComment()
   {
     assert(current_token_->type() == COMMENT);
 
-    std::shared_ptr<PgnComment> comment(new PgnComment(current_token_->value()));
+    PgnComment* comment = new PgnComment(current_token_->value());
     ReadNextToken();
     return comment;
   }
@@ -208,7 +208,7 @@ namespace Pgn
     // This contains the last move parsed. The last move is not added to the 
     // board right away, because the board position might still need to be 
     // passed to sub variations.
-    std::shared_ptr<PgnMove> last_move_parsed;
+    PgnMove* last_move_parsed = 0;
 
     // If the current token is an opening parenthesis, we are parsing a sub 
     // variation. We take note and skip the parenthesis.
@@ -246,7 +246,7 @@ namespace Pgn
         }
 
         // If the current token is a word we parse it as a move.
-        std::shared_ptr<PgnMove> move = ParseMove(board);
+        PgnMove* move = ParseMove(board);
         variation->push_back(move);
         ++number_move_parsed;
         
@@ -271,32 +271,32 @@ namespace Pgn
       else if (current_token_->type() == SYMBOL && current_token_->value() == "$")
       {
         // If the current token is a dollar sign, we parse a NAG.
-        std::shared_ptr<PgnMoveTextItem> item = ParseNag();
+        PgnMoveTextItem* item = ParseNag();
         variation->push_back(item);
       }
       else if (current_token_->type() == SYMBOL
                && (current_token_->value()[0] == '!' || current_token_->value()[0] == '?'))
       {
         // If the current token is a '!' or a '?', we parse it as a suffix annotation
-        std::shared_ptr<PgnMoveTextItem> item = ParseSuffixAnnotation();
+        PgnMoveTextItem* item = ParseSuffixAnnotation();
         variation->push_back(item);
       }
       else if (current_token_->type() == SYMBOL && current_token_->value() == "(")
       {
         // If the current token is an opening parenthesis we parse a 
         // sub variation.
-        std::shared_ptr<PgnVariation> sub_variation(new PgnVariation);
+        PgnVariation* sub_variation = new PgnVariation;
         unsigned int first_move_index = first_move_number * 2 - (first_move_white ? 1 : 0);
         unsigned int next_move_index = first_move_index + number_move_parsed - 1;
         unsigned int next_move_number = (next_move_index + 1) / 2;
         bool next_move_white = (next_move_index % 2) != 0;
-        ParseVariation(board, next_move_number, next_move_white, sub_variation.get());
+        ParseVariation(board, next_move_number, next_move_white, sub_variation);
 
         variation->push_back(sub_variation);
       }
       else if (current_token_->type() == COMMENT)
       {
-        std::shared_ptr<PgnMoveTextItem> item = ParseComment();
+        PgnMoveTextItem* item = ParseComment();
         variation->push_back(item);
       }
       else if (current_token_->type() == SYMBOL)

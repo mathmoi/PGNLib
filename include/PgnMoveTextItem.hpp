@@ -6,6 +6,7 @@ namespace Pgn
   class PgnMoveTextItem
   {
   public:
+    virtual PgnMoveTextItem* Clone() const = 0;
     virtual ~PgnMoveTextItem() {};
   };
 }

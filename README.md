@@ -54,7 +54,6 @@ in the source tree in the directory example/example1.
     #include <iostream>
     #include <fstream>
     #include <PgnParser.hpp>
-    #include <memory>
 
     int main(int argc, char** argv)
     {
@@ -73,7 +72,7 @@ in the source tree in the directory example/example1.
         // We display all move in the format "from - to"
         for (auto item : game)
         {
-          std::shared_ptr<Pgn::PgnMove> move = std::dynamic_pointer_cast<Pgn::PgnMove>(item);
+          Pgn::PgnMove* move = dynamic_cast<Pgn::PgnMove*>(item);
           if (move)
           {
             std::cout <<static_cast<char>('a' + (move->from() % 8)) <<(move->from() / 8) + 1 <<" - " <<static_cast<char>('a' + (move->to() % 8)) <<(move->to() / 8) + 1 <<std::endl;
