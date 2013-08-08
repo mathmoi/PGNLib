@@ -7,7 +7,8 @@
 namespace Pgn
 {
   PgnTokenizer::PgnTokenizer(std::istream* ptr_is)
-      : ptr_is_(ptr_is)
+      : ptr_is_(ptr_is),
+        current_line_(1)
   {
     ReadNextChar();
 
@@ -19,6 +20,13 @@ namespace Pgn
   void PgnTokenizer::ReadNextChar()
   {
     current_char_ = ptr_is_->good() ? static_cast<char>(ptr_is_->get()) : '\0';
+
+    // If the charater we just read is a newline, we need to increment the line
+    // counter.
+    if (current_char_ == '\n')
+    {
+      ++current_line_;
+    }
   }
 
   void PgnTokenizer::StoreCurrentCharReadNext()

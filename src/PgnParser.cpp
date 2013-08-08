@@ -341,16 +341,24 @@ namespace Pgn
   {
     PgnGame game;
 
-    CheckUnexpectedEof();
+    try
+    {
+      CheckUnexpectedEof();
 
-    // We parse the tags
-    ParseTags(game.tags());
+      // We parse the tags
+      ParseTags(game.tags());
 
-    // We parse the moves
-    Chessboard board;
-    ParseVariation(board, 1, true, &game);
+      // We parse the moves
+      Chessboard board;
+      ParseVariation(board, 1, true, &game);
 
-    game.set_result(ParseResult());
+      game.set_result(ParseResult());
+    }
+    catch (PgnParserException ex)
+    {
+      ex.set_line_number(tokenizer_.current_line());
+      throw ex;
+    }
 
     return game;
   }

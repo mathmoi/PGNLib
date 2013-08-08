@@ -1,8 +1,7 @@
 #ifndef INCLUDE_SAN_PARSER_HPP_
 #define INCLUDE_SAN_PARSER_HPP_
 
-#include <stdexcept>
-
+#include "PgnParserException.hpp"
 #include "Chessboard.hpp"
 #include "Piece.hpp"
 #include "Bitboard.hpp"
@@ -10,11 +9,11 @@
 
 namespace Pgn
 {
-  class InvalidMoveException : public std::runtime_error
+  class InvalidMoveException : public PgnParserException
   {
   public:
     InvalidMoveException()
-      : std::runtime_error("The move is invalid in this position.") {};
+      : PgnParserException("The move is invalid in this position.") {};
   };
 
 

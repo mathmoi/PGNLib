@@ -11,14 +11,15 @@
 #include "PgnNag.hpp"
 #include "PgnComment.hpp"
 #include "Chessboard.hpp"
+#include "PgnParserException.hpp"
 
 namespace Pgn
 {
-  class UnexpectedTokenException : public std::runtime_error
+  class UnexpectedTokenException : public PgnParserException
   {
   public:
     UnexpectedTokenException()
-      : runtime_error("An unexpected token was found while parsing the pgn games.") {}
+      : PgnParserException("An unexpected token was found while parsing the pgn games.") {}
   };
 
   /**

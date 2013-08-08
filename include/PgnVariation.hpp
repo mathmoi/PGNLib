@@ -2,17 +2,17 @@
 #define INCLUDE_PGN_VARIATION_HPP_
 
 #include <vector>
-#include <stdexcept>
 
+#include "PgnParserException.hpp"
 #include "PgnMoveTextItem.hpp"
 
 namespace Pgn
 {
-  class InvalidItemException : public std::runtime_error
+  class InvalidItemException : public PgnParserException
   {
   public:
     InvalidItemException()
-      : std::runtime_error("An invalid items was added to a PgnVariation.") {};
+      : PgnParserException("An invalid item was added to a PgnVariation.") {};
   };
 
 

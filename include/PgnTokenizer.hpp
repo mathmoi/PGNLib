@@ -3,9 +3,9 @@
 
 #include <istream>
 #include <string>
-#include <stdexcept>
 
 #include "PgnToken.hpp"
+#include "PgnParserException.hpp"
 
 namespace Pgn
 {
@@ -13,11 +13,11 @@ namespace Pgn
    * Exception class used when a token is requested but the end of the stream 
    * is reached.
    */
-  class EndOfStreamException : public std::runtime_error
+  class EndOfStreamException : public PgnParserException
   {
   public:
     EndOfStreamException()
-      : runtime_error("No more data on the stream to generate a token.") {}
+      : PgnParserException("No more data on the stream to generate a token.") {}
   };
 
   /*
@@ -25,11 +25,11 @@ namespace Pgn
    * still especting characters. This usually mean there is an error in the 
    * PGN file.
    */
-  class UnexpectedEofException : public std::runtime_error
+  class UnexpectedEofException : public PgnParserException
   {
   public:
     UnexpectedEofException()
-      : runtime_error("Unexpected end of stream while parsing pgn games.") {}
+      : PgnParserException("Unexpected end of stream while parsing pgn games.") {}
   };
 
   /*
@@ -49,6 +49,9 @@ namespace Pgn
     // The next character to use. This comes from is_ and we should use 
     // read_next_char() to replace it with a new one.
     char current_char_;
+
+    // Current line number
+    uint64_t current_line_;
     
   public:
     /*
@@ -70,6 +73,8 @@ namespace Pgn
      * end of the stream.
      */
     inline bool eof() { return current_char_ == '\0'; };
+
+    inline uint64_t current_line() const { return current_line_; };
 
   private:
     void SkipWhiteSpaces();

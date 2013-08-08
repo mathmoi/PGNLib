@@ -42,9 +42,10 @@ int main(int argc, char** argv)
       std::cout <<std::endl;
     }
   }
-  catch (std::runtime_error e)
+  catch (Pgn::PgnParserException e)
   {
     std::cout <<"Unable to parse game in \"" <<argv[1] <<"\"." <<std::endl
+              <<"Position: At or around line " <<e.line_number() <<std::endl
               <<"Reason: " <<e.what() <<std::endl;
   }
 

@@ -3,8 +3,8 @@
 
 #include <array>
 #include <string>
-#include <stdexcept>
 
+#include "PgnParserException.hpp"
 #include "Piece.hpp"
 #include "BitboardConstants.hpp"
 
@@ -21,21 +21,21 @@ namespace Pgn
     QUEEN_SIDE = 1
   };
 
-  class BadFenException : public std::runtime_error
+  class BadFenException : public PgnParserException
   {
   public:
     BadFenException()
-      : std::runtime_error("Could not parse the FEN string.") {};
+      : PgnParserException("Could not parse the FEN string.") {};
   };
 
-  class InvalidMakeMoveException : public std::runtime_error
+  class InvalidMakeMoveException : public PgnParserException
   {
   public:
     InvalidMakeMoveException()
-      : std::runtime_error("Invalid move") {};
+      : PgnParserException("Invalid move") {};
 
     InvalidMakeMoveException(const std::string& what_arg)
-      : std::runtime_error(what_arg) {};
+      : PgnParserException(what_arg) {};
   };
 
   class Chessboard
