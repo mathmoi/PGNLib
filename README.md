@@ -1,7 +1,6 @@
 pgnparser
 =========
 
-<a name="introduction" />
 pgnparser is a library that can be used to read and create [Portable Game 
 Notation (or PGN)][pgn] files.
 
@@ -31,17 +30,17 @@ ability to parse PGN files. However their parsers are usually dependent on
 other parts of their code such as their move generator. This makes them hard
 to reuse in another application.
 
-<a name="table_of_content" />
 Table of content
 ----------------
 
-  * [Introduction](#introduction)
-  * [Table of content](#table_of_content)
-  * [Example](#example)
-  * [Documentation](#documentation)
-  * [References](#references)
+[TOC]
 
-<a name="example" /> 
+License
+-------
+
+The PgnLib library is distributed under the MIT License. You can find a copy 
+of the license in the file LICENSE.txt in the root directory.
+
 Example
 -------
 
@@ -86,7 +85,6 @@ in the source tree in the directory example/example1.
       return 0;
     }
 
-<a name="author" />
 Author
 ------
 
