@@ -37,10 +37,10 @@ namespace PgnLib
 		    first_move_white_(true) {};
 
     PgnVariation(const PgnVariation& other);
-    PgnVariation(PgnVariation&& other) noexcept;
+    PgnVariation(PgnVariation&& other) throw();
     PgnVariation& operator=(PgnVariation other);
     PgnVariation& operator=(PgnVariation&& other);
-    ~PgnVariation() noexcept;
+    ~PgnVariation() throw();
 
 
     inline PgnMoveTextItem* Clone() const { return new PgnVariation(*this); };

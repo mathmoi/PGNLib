@@ -51,7 +51,7 @@ namespace PgnLib
     char current_char_;
 
     // Current line number
-    uint64_t current_line_;
+    int32_t current_line_;
     
   public:
     /*
@@ -74,7 +74,7 @@ namespace PgnLib
      */
     inline bool eof() { return current_char_ == '\0'; };
 
-    inline uint64_t current_line() const { return current_line_; };
+    inline int32_t current_line() const { return current_line_; };
 
   private:
     void SkipWhiteSpaces();

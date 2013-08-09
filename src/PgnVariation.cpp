@@ -16,7 +16,7 @@ namespace PgnLib
     }
   }
 
-  PgnVariation::PgnVariation(PgnVariation&& other) noexcept
+  PgnVariation::PgnVariation(PgnVariation&& other) throw()
   {
     Swap(other);
   }
@@ -33,7 +33,7 @@ namespace PgnLib
     return *this;
   }
 
-  PgnVariation::~PgnVariation() noexcept
+  PgnVariation::~PgnVariation() throw()
   {
     for(auto& item : items_)
     {
