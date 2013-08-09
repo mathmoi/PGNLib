@@ -6,7 +6,7 @@
 #include "PgnParserException.hpp"
 #include "PgnMoveTextItem.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   class InvalidItemException : public PgnParserException
   {

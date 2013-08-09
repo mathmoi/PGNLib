@@ -1,6 +1,6 @@
 #include "../include/PgnTags.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   std::set<std::string> CreateSTR()
   {

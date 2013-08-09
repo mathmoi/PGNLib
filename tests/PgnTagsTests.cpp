@@ -3,7 +3,7 @@
 #include <UnitTest++.h>
 #include <PgnTags.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(PgnTagsTests)
   {

@@ -1,7 +1,7 @@
 #ifndef INCLUDE_PGN_MOVE_TEXT_ITEM_HPP_
 #define INCLUDE_PGN_MOVE_TEXT_ITEM_HPP_
 
-namespace Pgn
+namespace PgnLib
 {
   class PgnMoveTextItem
   {

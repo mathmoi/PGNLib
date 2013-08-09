@@ -1,6 +1,6 @@
 #include <cassert>
 
-namespace Pgn
+namespace PgnLib
 {
   void Chessboard::AddPiece(Position pos, Piece piece)
   {

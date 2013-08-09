@@ -8,7 +8,7 @@
 #include "Piece.hpp"
 #include "BitboardConstants.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   typedef size_t Position;
 

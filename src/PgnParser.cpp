@@ -3,7 +3,7 @@
 #include "../include/PgnParser.hpp"
 #include "../include/SANParser.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   std::map<std::string, PgnResult> CreateResultMap()
   {

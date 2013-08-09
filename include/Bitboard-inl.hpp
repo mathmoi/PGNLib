@@ -1,4 +1,4 @@
-namespace Pgn
+namespace PgnLib
 {
   inline unsigned int BitSearch(Bitboard bb)
   {

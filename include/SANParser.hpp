@@ -7,7 +7,7 @@
 #include "Bitboard.hpp"
 #include "PgnMove.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   class InvalidMoveException : public PgnParserException
   {

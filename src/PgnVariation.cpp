@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace Pgn
+namespace PgnLib
 {
   PgnVariation::PgnVariation(const PgnVariation& other)
     : first_move_number_(other.first_move_number_),

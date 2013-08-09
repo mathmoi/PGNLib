@@ -3,7 +3,7 @@
 
 #include <stdexcept>
 
-namespace Pgn
+namespace PgnLib
 {
   class PgnParserException : public std::runtime_error
   {

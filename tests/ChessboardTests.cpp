@@ -4,7 +4,7 @@
 
 #include <Chessboard.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(ChessBoardTests)
   {

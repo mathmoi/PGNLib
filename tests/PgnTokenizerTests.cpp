@@ -4,7 +4,7 @@
 #include <UnitTest++.h>
 #include <PgnTokenizer.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(PgnTokenizerTests)
   {

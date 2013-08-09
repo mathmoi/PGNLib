@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 
-namespace Pgn
+namespace PgnLib
 {
   class PgnTags
   {

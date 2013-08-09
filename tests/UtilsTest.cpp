@@ -4,7 +4,7 @@
 #include <UnitTest++.h>
 #include <Utils.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(UtilsTests)
   {

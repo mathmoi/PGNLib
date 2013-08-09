@@ -6,7 +6,7 @@
 #include <sstream>
 #include <vector>
 
-namespace Pgn
+namespace PgnLib
 {
   // This function returns a vector of strings containing the substring 
   // contained in s and separated by delim.

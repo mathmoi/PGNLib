@@ -5,12 +5,12 @@
 int main(int , char**)
 {
   std::ifstream in("/home/mathmoi/Desktop/IB1310B.pgn");
-  Pgn::PgnParser parser(&in);
+  PgnLib::PgnParser parser(&in);
 
   unsigned int count = 0;
   while (!parser.eof())
   {
-    Pgn::PgnGame game = parser.ParseSingleGame();
+    PgnLib::PgnGame game = parser.ParseSingleGame();
     ++count;
 
     if (count % 1000 == 0)

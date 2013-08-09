@@ -8,7 +8,7 @@
 #include "../include/Utils.hpp"
 #include "../include/Bitboard.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   std::unordered_map<char, Piece> CreateCharPieceMap()
   {

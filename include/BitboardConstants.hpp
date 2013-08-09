@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "Direction.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   typedef uint64_t Bitboard;
 

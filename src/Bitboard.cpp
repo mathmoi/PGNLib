@@ -1,7 +1,7 @@
 #include "../include/Bitboard.hpp"
 #include "../include/BitboardConstants.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   // returns the column index of the position p.
   size_t File(Position p)

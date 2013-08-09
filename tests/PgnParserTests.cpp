@@ -3,7 +3,7 @@
 #include <UnitTest++.h>
 #include <PgnParser.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(PgnParserTests)
   {

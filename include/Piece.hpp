@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <cstdint>
 
-namespace Pgn
+namespace PgnLib
 {
   enum class Color : uint_fast8_t
   {

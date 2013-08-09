@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Pgn
+namespace PgnLib
 {
   /*
    * Type used to define the type of a PgnToken.

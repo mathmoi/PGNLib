@@ -7,7 +7,7 @@
 #include "PgnToken.hpp"
 #include "PgnParserException.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   /*
    * Exception class used when a token is requested but the end of the stream 

@@ -3,7 +3,7 @@
 #include <UnitTest++.h>
 #include <Piece.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(PieceTests)
   {

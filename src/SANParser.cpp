@@ -1,6 +1,6 @@
 #include "../include/SANParser.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   Position GetOrigineMove(const Chessboard& board, Piece p, Position to, bool is_capture, Bitboard from)
   {

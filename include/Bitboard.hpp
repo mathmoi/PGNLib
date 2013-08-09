@@ -6,7 +6,7 @@
 
 #include "BitboardConstants.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   typedef size_t Position;
   typedef uint64_t Bitboard;

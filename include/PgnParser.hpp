@@ -13,7 +13,7 @@
 #include "Chessboard.hpp"
 #include "PgnParserException.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   class UnexpectedTokenException : public PgnParserException
   {

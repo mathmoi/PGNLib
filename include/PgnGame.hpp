@@ -6,7 +6,7 @@
 #include "PgnTags.hpp"
 #include "PgnVariation.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   enum class PgnResult : uint8_t
   {

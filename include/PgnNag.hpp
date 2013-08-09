@@ -5,7 +5,7 @@
 
 #include "PgnMoveTextItem.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   enum class NAG : uint8_t
   {

@@ -4,7 +4,7 @@
 #include "Piece.hpp"
 #include "PgnMoveTextItem.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   typedef size_t Position;
 

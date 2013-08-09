@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Pgn
+namespace PgnLib
 {
   class PgnComment : public PgnMoveTextItem
   {

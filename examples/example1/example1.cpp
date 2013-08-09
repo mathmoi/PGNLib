@@ -20,11 +20,11 @@ int main(int argc, char** argv)
 
   try
   {
-    Pgn::PgnParser parser(&in);
+    PgnLib::PgnParser parser(&in);
 
     while(!parser.eof())
     {
-      Pgn::PgnGame game = parser.ParseSingleGame();
+      PgnLib::PgnGame game = parser.ParseSingleGame();
 
       // We display both players name.
       std::cout <<game.tags()["White"] << " - " <<game.tags()["Black"] <<std::endl;
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
       // We display all move in the format "from - to"
       for (auto item : game)
       {
-        Pgn::PgnMove* move = dynamic_cast<Pgn::PgnMove*>(item);
+        PgnLib::PgnMove* move = dynamic_cast<PgnLib::PgnMove*>(item);
         if (move)
         {
           std::cout <<static_cast<char>('a' + (move->from() % 8)) <<(move->from() / 8) + 1 <<" - " <<static_cast<char>('a' + (move->to() % 8)) <<(move->to() / 8) + 1 <<std::endl;
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
       std::cout <<std::endl;
     }
   }
-  catch (Pgn::PgnParserException e)
+  catch (PgnLib::PgnParserException e)
   {
     std::cout <<"Unable to parse game in \"" <<argv[1] <<"\"." <<std::endl
               <<"Position: At or around line " <<e.line_number() <<std::endl

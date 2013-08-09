@@ -3,7 +3,7 @@
 #include <SANParser.hpp>
 #include <Chessboard.hpp>
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(SANParserTests)
   {

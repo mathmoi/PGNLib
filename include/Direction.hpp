@@ -1,7 +1,7 @@
 #ifndef INCLUDE_DIRECTION_HPP_
 #define INCLUDE_DIRECTION_HPP_
 
-namespace Pgn
+namespace PgnLib
 {
   enum class Direction : unsigned char
   {

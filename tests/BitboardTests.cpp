@@ -3,7 +3,7 @@
 #include "../include/Bitboard.hpp"
 #include "../include/BitboardConstants.hpp"
 
-namespace Pgn
+namespace PgnLib
 {
   SUITE(BitboardTests)
   {
