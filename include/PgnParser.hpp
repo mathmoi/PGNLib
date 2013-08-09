@@ -44,9 +44,9 @@ namespace PgnLib
      * file an istringstream or any other istream on wich PGN games can be
      * red. If the istream is a file it must be opened before the constructor
      * is called and it must be closed by the calling code after all call to
-     * \ref ParseSingleGame.
+     * @ref ParseSingleGame.
      *
-     * \param is std::istream on wich the parser will try to read PGN games.
+     * @param   is  std::istream on wich the parser will try to read PGN games.
      */
     inline PgnParser(std::istream* is)
       : tokenizer_(is),
@@ -61,8 +61,8 @@ namespace PgnLib
      * multiples or all games of a file, ParseSingleGame must me called
      * multiple times.
      *
-     * \return A Pgn game object containing all the informations  of the 
-     * parsed game.
+     * @return  A Pgn game object containing all the informations  of the 
+     *          parsed game.
      */
     PgnGame ParseSingleGame();
 
@@ -70,13 +70,13 @@ namespace PgnLib
      * Indicate if the end of the stream is reached.
      * 
      * If not, we should be able to read the next game with 
-     * \ref ParseSingleGame.
+     * @ref ParseSingleGame.
      *
      * Client code should call this function before each call to 
      * ParseSingleGame to makes sure there is still data to be parsed on the 
      * stream.
      * 
-     * \return True if there is still data on the strea, false otherwise. 
+     * @return  True if there is still data on the strea, false otherwise. 
      */
     bool eof() const;
   
