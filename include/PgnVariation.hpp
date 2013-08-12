@@ -32,11 +32,28 @@ namespace PgnLib
   class PgnVariation : public PgnMoveTextItem
   {
   public:
+    /**
+     * Type of a pointer to an PgnMoveTextItem
+     */
     typedef PgnMoveTextItem* ItemPointer;
-    typedef const PgnMoveTextItem* ConstItemPointer;
-    typedef std::vector<ItemPointer> ItemsVector;
 
+    /**
+     * Type if a const pointer to a PgnMoveTextItem
+     */
+    typedef const PgnMoveTextItem* ConstItemPointer;
+    
+    /// @cond
+    typedef std::vector<ItemPointer> ItemsVector;
+    /// @endcond
+    
+    /**
+     * Type of iterator returned by begin() and end()
+     */
     typedef ItemsVector::iterator iterator;
+
+    /**
+     * Type of const iterator returned by begin() and end()
+     */
     typedef ItemsVector::const_iterator const_iterator;
 
   private:
@@ -226,7 +243,7 @@ namespace PgnLib
     {
       delete *it;
       items_.erase(it);
-    }};
+    };
   };
 }
 
