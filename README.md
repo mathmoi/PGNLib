@@ -85,6 +85,99 @@ in the source tree in the directory example/example1.
       return 0;
     }
 
+Tutorial
+--------
+
+The first thing to do is include PgnParser.hpp (and other include files).
+
+    :::C++
+    #include <PgnParser.hpp>
+    #include <iostream>
+
+Then you need to do is create a PgnParser object. To do so, you 
+need to pass it a istream object on which the parser will read the PGN 
+games. This is stream may be an opened file (ifstream), the standard input,
+an istringstream or any other istream. In our example, we will read PGN files
+from the standard input.
+
+    :::C++
+    PgnLib::PgnParser parser(std::cin);
+
+If we want to read all games on the stream we will need to repeatedly call the
+ParseSingleGame method. To know when to stop, we can verify if we are at the 
+end of the stream by looping until the eof() property of the parser object 
+returns true. To parse a game, we simply call the ParseSingleGame method that
+returns a PgnGame object containing all the informations of the game.
+
+    :::C++
+    while (!parser.eof())
+    {
+      PgnGame game = parser.ParseSingleGame();
+      // Do something with the game here
+    }
+
+This should parse all the game on the istream one by one. Now we need to do
+something with theses games. At first let's just print a game number and the
+players names. To do so we access the tags() property that returns an 
+std::map-like object containing the tags. We then extract the values of the
+"White" and "Black" tags, that should contains the white and black player's
+names, using the  \[\] operator.
+
+    :::C++
+    uint32_t game_number = 0;
+    while (!parser.eof())
+    {
+      PgnLib::PgnGame game = parser.ParseSingleGame();
+
+      ++game_number;
+      std::cout <<"Game " <<game_number <<std::endl
+                <<game.tags()["White"] <<" - " <<game.tags()["Black"] <<std::endl;
+                <<std::endl;
+    }
+
+Let's suppose instead that we wished to display all the tags. In the case we 
+would have to use an [iterator][] like this:
+
+[iterator]: http://en.wikipedia.org/wiki/Iterator
+
+    :::C++
+    PgnLib::PgnTags::iterator tag = game.tags().begin();
+    while (tag < game.tags().end())
+    {
+      std::cout <<tag.first << ": " <<tag.second <<std::endl;
+      ++it;
+    }
+
+Better yet, if your compiler supports it, you can use C++11's range-based for
+statements like this :
+
+    :::C++
+    for (auto tag : game.tags())
+    {
+      std::cout <<tag.first << ": " <<tag.second <<std::endl;
+    }
+
+Next, we probably wants to read the movetext. If you only care about moves in
+the main line you can just iterates on the items and check if they are moves.
+If they aren't you can ignore them like this :
+
+    :::C++
+    for (auto item : game)
+    {
+      PgnLib::PgnMove* move = dynamic_cast<PgnMove*>(item);
+      if (move)
+      {
+        std::cout <<move->from() <<" -> " <<move->to() <<std::endl;
+      }
+      else
+      {
+        // The item is not a move
+      }
+    }
+
+However, 
+      
+
 Author
 ------
 
