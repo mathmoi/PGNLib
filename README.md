@@ -175,8 +175,71 @@ If they aren't you can ignore them like this :
       }
     }
 
-However, 
-      
+However, you might also want to do something with all the items found in the
+movetext. For the simple items like comments and NAG you do the same thing
+we just did whith the move. First you check if the item is of the type you
+are looking for and then if it is, you do use it.
+
+For variations it's a bit different. Variation can contains other variation,
+so we will need somekind of recursive function to process variations.
+
+Bellow is such a function that takes a variation in input and ouput it in a 
+XML-like format.
+
+    :::C++
+    void ProcessVariation(const PgnLib::PgnVariation* variation, const std::string& tagName, const std::string& indent)
+    {
+      std::cout <<indent <<"<" <<tagName <<">" <<std::endl;
+
+      for (auto item : *variation)
+      {
+        PgnLib::PgnMove* move = dynamic_cast<PgnLib::PgnMove*>(item);
+        if (move)
+        {
+          ProcessMove(*move, indent + "  "); // output the move
+        }
+        else
+        {
+          PgnLib::PgnComment* comment = dynamic_cast<PgnLib::PgnComment*>(item);
+          if (comment)
+          {
+            ProcessComment(*comment, indent + "  "); // output the comment
+          }
+          else
+          {
+            PgnLib::PgnNag* nag = dynamic_cast<PgnLib::PgnNag*>(item);
+            if (nag)
+            {
+              ProcessNag(*nag, indent);
+            }
+            else
+            {
+              PgnLib::PgnVariation* subVariation = dynamic_cast<PgnLib::PgnVariation*>(item);
+              if (subVariation)
+              {
+                ProcessVariation(subVariation, "variation", indent + "  "); // Recursive call
+              }
+              else
+              {
+                // This block should never be reached.
+              }
+            }
+          }
+        }
+      }
+
+      std::cout <<indent <<"</" <<tagName <<">" <<std::endl;
+    }
+
+Since a PgnGame is a PgnVariation, we can call this function on a PgnGame.
+
+    ::C++
+    PgnGame game = parser.ParseSingleGame();
+    ProcessVariation(&game, "");
+
+You can find a complete exemple application that read PGN games on the input 
+stream and output then on the output stream in an xml like format in the source
+tree under the directory examples/example2
 
 Author
 ------

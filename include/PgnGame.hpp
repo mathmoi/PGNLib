@@ -57,6 +57,7 @@ namespace PgnLib
      * @return  reference to the game's PgnTags object.
      */
     inline PgnTags& tags() { return tags_; };
+    inline const PgnTags& tags() const { return tags_; };
 
     /**
      * Get the result of the game
