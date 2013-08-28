@@ -138,8 +138,6 @@ names, using the  \[\] operator.
 Let's suppose instead that we wished to display all the tags. In the case we 
 would have to use an [iterator][] like this:
 
-[iterator]: http://en.wikipedia.org/wiki/Iterator
-
     :::C++
     PgnLib::PgnTags::iterator tag = game.tags().begin();
     while (tag < game.tags().end())
@@ -147,6 +145,8 @@ would have to use an [iterator][] like this:
       std::cout <<tag.first << ": " <<tag.second <<std::endl;
       ++it;
     }
+
+[iterator]: http://en.wikipedia.org/wiki/Iterator
 
 Better yet, if your compiler supports it, you can use C++11's range-based for
 statements like this :
