@@ -91,7 +91,7 @@ namespace PgnLib
         games.push_back(game);
       }
 
-      CHECK_EQUAL(4u, games.size());
+      CHECK_EQUAL(5u, games.size());
     }
 
     TEST(ReadTestPgn)
