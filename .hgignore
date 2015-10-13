@@ -12,7 +12,8 @@ regexp syntax
 ^gmon.out$
 
 # Windows/VC++ specifics
-^VS/Debug/
+^vs.*/Debug/
+^vs.*/x64/
 \.sdf$
 \.suo$
 \.user$

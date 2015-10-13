@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PgnParsersTests">
+      <UniqueIdentifier>{d0e476bf-24a0-42bd-9716-c0696b83281b}</UniqueIdentifier>
+      <Extensions>
+      </Extensions>
+    </Filter>
+    <Filter Include="PgnParser">
+      <UniqueIdentifier>{58acb84c-f2e5-4ac2-aafd-c4f9803e513a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\PgnParserTests\BitboardTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\ChessboardTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\PgnParserTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\PgnTagsTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\PgnTokenizerTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\PieceTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\SANParserTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\TestsMain.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParserTests\UtilsTests.cpp">
+      <Filter>PgnParsersTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\PgnComment.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\PgnParser.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\PgnTags.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\PgnTokenizer.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\PgnVariation.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\SANParser.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\Bitboard.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PgnParser\Chessboard.cpp">
+      <Filter>PgnParser</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\PgnParser\Chessboard.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\Chessboard-inl.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\deep_const_ptr.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\Direction.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\DllPort.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnComment.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnGame.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnMove.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnMoveTextItem.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnNag.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnParser.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnParserException.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnTags.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnToken.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnTokenizer.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\PgnVariation.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\Piece.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\SANParser.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\Utils.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\Bitboard.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\BitboardConstants.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PgnParser\Bitboard-inl.hpp">
+      <Filter>PgnParser</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
